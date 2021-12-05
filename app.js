@@ -1,11 +1,19 @@
-// Tạo server đầu tiên
 
 const http = require('http')
 
-// Tạo ra 1 biến để lưu trữ server // vế sau là đã khởi tạo 1 serer
 const server = http.createServer((req, res) => {
-    console.log(req.url, req.method, req.headers)
-    // res gửi phản hồi
+    // video 32: Routing request
+    const url = req.url;
+    if(url === '/') {
+        res.setHeader('Content-Type', 'text/html')
+        res.write("<html>")
+        res.write("<header><title>My First Page</title></header>")
+        res.write(`<body><form action='/message' method='POST'>
+        <input type = 'text' name='message'> <button type='submit'>Send</button>
+        </form></body>`)
+        res.write("</html>")
+        return res.end()
+    }
     res.setHeader('Content-Type', 'text/html')
     res.write("<html>")
     res.write("<header><title>My First Page</title></header>")
@@ -15,5 +23,4 @@ const server = http.createServer((req, res) => {
 
 })
 
-// MỞ Port cho SERVER // con số 3000 có thể thay đổi mặc định sẽ là http://localhost:3000/
 server.listen(3000)
