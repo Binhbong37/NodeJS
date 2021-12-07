@@ -20,5 +20,8 @@
   "homepage": "https://github.com/Binhbong37/NodeJS#readme",
   "devDependencies": {
     "nodemon": "^1.18.3"
+  },
+  "dependencies": {
+    "express": "^4.16.3"
   }
 }
