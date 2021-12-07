@@ -33,7 +33,6 @@ const requestHandler = (req, res) => {
     
             });
         })
-       
     }
     res.setHeader('Content-Type', 'text/html')
     res.write("<html>")
