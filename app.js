@@ -6,7 +6,12 @@ const app = express()
 const expressHbs = require("express-handlebars")
 
 // Use handlebar 
-app.engine('hbs', expressHbs())
+app.engine('hbs',
+expressHbs({
+    layoutDir: "views/layouts/",
+    defaultLayout: 'main-layout',
+    extname: 'hbs'
+}))
 app.set('view engine', 'hbs')
 app.set('views', 'views')
 
