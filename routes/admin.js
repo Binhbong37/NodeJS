@@ -1,27 +1,12 @@
 const express = require("express");
 const path = require("path")
-const rootDir = require("../util/path")
+// Add file tu controller
+const productController = require("../controllers/product")
+
 const router = express.Router();
 
-const products = []
-router.get('/add-product', (req, res, next) => {
-    
-    res.render('add-product', {
-        pageTitle: "Add Product",
-        path:'/admin/add-product',
-        formsCSS: true,
-        productCSS: true,
-        activeAddProduct: true
-    })
-})
+router.get('/add-product', productController.getAddProduct)
 
-router.post('/add-product', (req, res, next) => {
-    // console.log(req.body)
-    products.push({title: req.body.title})
-    res.redirect("/")
-})
+router.post('/add-product',productController.postAddProduct)
 
-module.exports = {
-    router: router,
-    products: products
-}
+module.exports = router
