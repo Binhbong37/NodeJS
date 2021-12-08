@@ -3,16 +3,10 @@ const express = require("express")
 const adminData = require("./routes/admin")
 const shopRoutes = require("./routes/shop")
 const app = express()
-const expressHbs = require("express-handlebars")
 
-// Use handlebar 
-app.engine('hbs',
-expressHbs({
-    layoutDir: "views/layouts/",
-    defaultLayout: 'main-layout',
-    extname: 'hbs'
-}))
-app.set('view engine', 'hbs')
+// Use EJS
+
+app.set('view engine', 'ejs')
 app.set('views', 'views')
 
 
