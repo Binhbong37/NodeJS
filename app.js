@@ -3,9 +3,13 @@ const express = require("express")
 const adminData = require("./routes/admin")
 const shopRoutes = require("./routes/shop")
 const app = express()
+const expressHbs = require("express-handlebars")
 
-app.set('view engine', 'pug')
+// Use handlebar 
+app.engine('hbs', expressHbs())
+app.set('view engine', 'hbs')
 app.set('views', 'views')
+
 
 const bodyParser = require("body-parser")
 const path = require("path");
