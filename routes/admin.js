@@ -21,4 +21,7 @@ router.get('/edit-product/:productId', adminController.getEditProduct)
 // Điều hướng khi click vào Update Product
 router.post('/edit-product', adminController.postEditProduct)
 
+// Delete sp
+router.post('/delete-product', adminController.postDeleteProduct)
+
 module.exports = router;
