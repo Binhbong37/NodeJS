@@ -18,4 +18,7 @@ router.post('/add-product', adminController.postAddProduct);
 // Edit
 router.get('/edit-product/:productId', adminController.getEditProduct)
 
+// Điều hướng khi click vào Update Product
+router.post('/edit-product', adminController.postEditProduct)
+
 module.exports = router;
