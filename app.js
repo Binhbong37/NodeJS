@@ -17,7 +17,13 @@ const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
 // dung database
-db.execute('SELECT * FROM products')
+db.execute("SELECT * FROM products")
+.then((result) => {
+    console.log("Lay dc kq: ", result[0])
+})
+.catch((err) => {
+    console.log("Loi k lay dc: ", err)
+})
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
