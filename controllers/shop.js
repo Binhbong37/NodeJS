@@ -2,13 +2,15 @@ const Product = require('../models/product');
 const Cart = require("../models/cart")
 
 exports.getProducts = (req, res, next) => {
-  Product.fetchAll(products => {
+  Product.fetchAll()
+  .then( ([rows, fieldData]) => {
     res.render('shop/product-list', {
-      prods: products,
+      prods: rows,
       pageTitle: 'All Products',
       path: '/products'
     });
-  });
+  })
+  .catch(err => {console.log('Loi k ra: ', err)})
 };
 
 // Phần sẽ lấy id sản phẩm
@@ -25,13 +27,17 @@ exports.getProduct = (req, res, next) => {
 }
 
 exports.getIndex = (req, res, next) => {
-  Product.fetchAll(products => {
+  Product.fetchAll()
+  .then( ([rows, fieldData]) => {
+    console.log(rows)
     res.render('shop/index', {
-      prods: products,
+      prods: rows,
       pageTitle: 'Shop',
       path: '/'
     });
-  });
+  })
+  .catch(err => {console.log('Loi k ra: ', err)})
+ 
 };
 
 exports.getCart = (req, res, next) => {
