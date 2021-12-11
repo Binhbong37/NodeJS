@@ -21,7 +21,10 @@ exports.postAddProduct = (req, res, next) => {
     price: price,
     description: description
   })
-  .then((result) => {console.log('res from add controll')})
+  .then((result) => {
+    console.log('res from add dc produt')
+    res.redirect('/')
+  })
   .catch(err => console.log('Loi tu admin Controller: ', err))
 };
 
@@ -88,6 +91,14 @@ exports.getProducts = (req, res, next) => {
 
 exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
-  Product.deleteById(prodId)
-  res.redirect('/admin/products')
+  Product.findById(prodId)
+  .then((product) => {
+   return product.destroy()
+  })
+  .then(result => {
+    console.log('DELETED')
+    res.redirect('/admin/products')
+  })
+  .catch(err => console.log("Loi k xoa dc !!"))
+ 
 }
