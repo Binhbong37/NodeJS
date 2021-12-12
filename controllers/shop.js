@@ -98,10 +98,18 @@ exports.postCart = (req, res, next) => {
 
 exports.postDeleteCart = (req, res, next) => {
   const prodId = req.body.productId
-  Product.findById(prodId, product => {
-    Cart.deleteProduct(prodId, product.price);
+  req.user.getCart()
+  .then( cart => {
+    return cart.getProducts ({where: {id: prodId}})
+  })
+  .then(prods => {
+    const product = prods[0]
+    return product.cartItem.destroy()
+  })
+  .then( result => {
     res.redirect('/cart')
   })
+  .catch(err => console.log('Loi xoa sp'))
 }
 
 exports.getOrders = (req, res, next) => {
