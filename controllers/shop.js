@@ -114,8 +114,10 @@ exports.postDeleteCart = (req, res, next) => {
 }
 
 exports.postOrder = (req, res, next) => {
+  let fetchOrder;
   req.user.getCart()
   .then( cart => {
+    fetchOrder = cart
       return cart.getProducts()
     })
     .then( products => {
@@ -131,21 +133,23 @@ exports.postOrder = (req, res, next) => {
       .catch(err => console.log('Loi ORDER'))
     })
     .then(result => {
+      return fetchOrder.setProducts(null)
+    })
+    .then( result => {
       res.redirect("/orders")
     })
     .catch(err => console.log("Loi tu ORders"))
 }
 
 exports.getOrders = (req, res, next) => {
-  res.render('shop/orders', {
-    path: '/orders',
-    pageTitle: 'Your Orders'
-  });
-};
-
-exports.getCheckout = (req, res, next) => {
-  res.render('shop/checkout', {
-    path: '/checkout',
-    pageTitle: 'Checkout'
-  });
+  req.user
+  .getOrders({ include: ['products']})
+  .then(orders => {
+    res.render('shop/orders', {
+      path: '/orders',
+      pageTitle: 'Your Orders',
+      orders: orders
+    });
+  })
+  .catch(err => console.log("Loi tu ORDER"))
 };
