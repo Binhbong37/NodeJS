@@ -1,5 +1,6 @@
 const Product = require('../models/product');
 const Cart = require("../models/cart")
+const Order = require("../models/order")
 
 exports.getProducts = (req, res, next) => {
   Product.findAll()
@@ -110,6 +111,29 @@ exports.postDeleteCart = (req, res, next) => {
     res.redirect('/cart')
   })
   .catch(err => console.log('Loi xoa sp'))
+}
+
+exports.postOrder = (req, res, next) => {
+  req.user.getCart()
+  .then( cart => {
+      return cart.getProducts()
+    })
+    .then( products => {
+      req.user.createOrder()
+      .then( order => {
+        return order.addProducts(
+          products.map(product => {
+            product.orderItem = { quantity: product.cartItem.quantity};
+            return product
+          })
+        )
+      })
+      .catch(err => console.log('Loi ORDER'))
+    })
+    .then(result => {
+      res.redirect("/orders")
+    })
+    .catch(err => console.log("Loi tu ORders"))
 }
 
 exports.getOrders = (req, res, next) => {
