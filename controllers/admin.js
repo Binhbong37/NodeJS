@@ -78,7 +78,6 @@ exports.postEditProduct = (req, res, next) => {
     updatedImageUrl,
     prodId
     )
-
     return product
     .save()
     .then((result) => {
@@ -88,17 +87,15 @@ exports.postEditProduct = (req, res, next) => {
     .catch(err => console.log('Loi k EDIT duoc !!!'))
 }
 
+// XOA SAN PHAM
 
-// exports.postDeleteProduct = (req, res, next) => {
-//   const prodId = req.body.productId;
-//   Product.findById(prodId)
-//   .then((product) => {
-//    return product.destroy()
-//   })
-//   .then(result => {
-//     console.log('DELETED')
-//     res.redirect('/admin/products')
-//   })
-//   .catch(err => console.log("Loi k xoa dc !!"))
+exports.postDeleteProduct = (req, res, next) => {
+  const prodId = req.body.productId;
+  Product.deleteById(prodId)
+  .then(result => {
+    console.log('DELETED')
+    res.redirect('/admin/products')
+  })
+  .catch(err => console.log("Loi k xoa dc controller !!"))
  
-// }
+}
