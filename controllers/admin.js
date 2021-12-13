@@ -75,18 +75,19 @@ exports.postAddProduct = (req, res, next) => {
   
 // }
 
-// exports.getProducts = (req, res, next) => {
-//   // Product.findAll()
-//   req.user.getProducts()
-//   .then((products) => {
-//     res.render('admin/products', {
-//       prods: products,
-//       pageTitle: 'Admin Products',
-//       path: '/admin/products'
-//     });
-//   })
-//   .catch(err => console.log('Loi k Admin'))
-// };
+exports.getProducts = (req, res, next) => {
+  Product.fetchAll()
+  // req.user.getProducts()
+  .then((products) => {
+    console.log(products)
+    res.render('admin/products', {
+      prods: products,
+      pageTitle: 'Admin Products',
+      path: '/admin/products'
+    });
+  })
+  .catch(err => console.log('Loi k truy cap dc Admin'))
+};
 
 // exports.postDeleteProduct = (req, res, next) => {
 //   const prodId = req.body.productId;
