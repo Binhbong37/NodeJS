@@ -1,4 +1,5 @@
 const getDb = require("../util/database").getDb
+const mongoDb = require("mongodb")
 
 class Product {
   constructor(title, price, description, imageUrl) {
@@ -33,28 +34,23 @@ class Product {
       console.log("Loi tu productModels")
     })
   }
+
+  // Lay id san pham = id
+  static findById(prodId) {
+    const db = getDb()
+    return db
+    .collection('products')
+    .find({_id: new mongoDb.ObjectId(prodId)})
+    .next()
+    .then(product => {
+      console.log("Lay id sp: ", product)
+      return product
+    })
+    .catch(err => {
+      console.log('Loi k lay dc id productModel')
+    })
+  }
 }
 
-// const Product = sequelize.define('product', {
-//   id: {
-//     type: Sequelize.INTEGER,
-//     autoIncrement: true,
-//     allowNull: false,
-//     primaryKey: true
-//   },
-//   title: Sequelize.STRING,
-//   price: {
-//     type: Sequelize.DOUBLE,
-//     allowNull: false
-//   },
-//   imageUrl: {
-//     type: Sequelize.STRING,
-//     allowNull: false
-//   },
-//   description: {
-//     type: Sequelize.STRING,
-//     allowNull: false
-//   }
-// })
 
 module.exports = Product
