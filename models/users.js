@@ -4,9 +4,11 @@ const mongoDb = require("mongodb")
 const ObjectId = mongoDb.ObjectId
 
 class User {
-    constructor(username, email) {
+    constructor(username, email, cart, id) {
         this.username = username;
-        this.email = email
+        this.email = email;
+        this.cart = cart;
+        this._id = id;
     }
 
     // luu lai
@@ -14,6 +16,18 @@ class User {
         const db = getDb()
         return db
         .collection('users').insertOne(this)
+    }
+
+    // Tao cart
+    addToCard(product) {
+
+        const updatedCart = {item: [{...product, quantity: 1}]};
+        const db = getDb();
+        return db
+        .collection("users")
+        .updateOne(
+            { _id: new ObjectId(this._id) },
+            { $set: {cart: updatedCart} })
     }
 
     static findById(userId) {
