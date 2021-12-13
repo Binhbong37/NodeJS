@@ -7,7 +7,7 @@ class Product {
     this.description = description;
     this.imageUrl = imageUrl
   }
-
+// Create products
   save() {
     const db = getDb()
     return db.collection("products").insertOne(this)
@@ -16,6 +16,21 @@ class Product {
     })
     .catch(err => {
       console.log("Loi tu product DB")
+    })
+  }
+
+  // GET products
+  static fetchAll() {
+    const db = getDb()
+    return db.collection('products')
+    .find()
+    .toArray()
+    .then(products => {
+      console.log(products)
+      return products
+    })
+    .catch(err => {
+      console.log("Loi tu productModels")
     })
   }
 }
