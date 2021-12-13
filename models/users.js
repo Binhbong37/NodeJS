@@ -19,7 +19,13 @@ class User {
     static findById(userId) {
         const db = getDb();
         return db
-        .collection('users').findOne({_id: new ObjectId(userId)})
+        .collection('users')
+        .findOne({_id: new ObjectId(userId)})
+        .then(result => {
+            console.log('Ket qua cua USER: ', result)
+            return result
+        })
+        .catch(err => console.log("Loi k tim dc User !!!"))
     }
 }
 module.exports = User 

@@ -27,7 +27,6 @@ app.use((req, res, next) => {
         next()
     })
     .catch(err => console.log("Loi tai USER tai file app"))
-    next()
 })
 
 app.use('/admin', adminRoutes);
