@@ -37,7 +37,10 @@ exports.postAddProduct = (req, res, next) => {
 exports.getProducts = (req, res, next) => {
   Product.find()
   // req.user.getProducts()
+  // .select("title price")
+  // .populate("userId", "name")
   .then((products) => {
+    console.log('Lay cai gi: ',products)
     console.log(products)
     res.render('admin/products', {
       prods: products,
