@@ -3,9 +3,10 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 
+const mongoose = require("mongoose")
+
 const errorController = require('./controllers/error');
 
-const mongoConnect = require("./util/database").mongoConnect
 const User = require("./models/users")
 
 const app = express();
@@ -34,6 +35,9 @@ app.use(shopRoutes);
 
 app.use(errorController.get404);
 
-mongoConnect(() => {
+mongoose.connect("mongodb://localhost:27017")
+.then(result => {
+    console.log("Ket noi voi MONGOOSE !!!")
     app.listen(3000)
 })
+.catch(err => console.log("Loi ket noi MONGOOSE: "))
