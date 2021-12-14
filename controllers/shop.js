@@ -44,19 +44,17 @@ exports.getIndex = (req, res, next) => {
 };
 
 exports.getCart = (req, res, next) => {
-  req.user.getCart()
-  .then(cart => {
-    return cart.getProducts()
-    .then(product => {
+  req.user
+  .getCart()
+  .then(product => {
+    console.log(product)
       res.render('shop/cart', {
           path: '/cart',
           pageTitle: 'Your Cart',
           products: product 
         });
-    })
-    .catch(err => console.log("Post ben trong"))
   })
-  .catch(err => console.log('Loi tu get card'))
+  .catch(err => console.log('Loi tu get card controller: ', err))
 };
 
 exports.postCart = (req, res, next) => {
@@ -67,6 +65,7 @@ exports.postCart = (req, res, next) => {
   })
   .then( result => {
     console.log("Ket qua cua POST CART: ", result)
+    res.redirect("/cart")
   })
 //   let fetchCart;
 //   let newQuantity = 1
