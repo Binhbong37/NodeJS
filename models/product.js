@@ -21,7 +21,7 @@ const productSchema = new Schema({
     require: true
   }
 })
-
+module.exports = mongoose.model("Product", productSchema)
 
 
 // const getDb = require("../util/database").getDb
