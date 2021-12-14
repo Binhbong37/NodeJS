@@ -91,7 +91,7 @@ exports.postOrder = (req, res, next) => {
     const products = user.cart.items.map(i => {
       return {
         quantity: i.quantity,
-        product: i.productId
+        product: {...i.productId._doc}
       }
     });
     const order = new Order({
@@ -103,7 +103,10 @@ exports.postOrder = (req, res, next) => {
     })
     return order.save()
   })
-    .then( result => {
+    .then(result => {
+      return req.user.clearCart()
+    })
+    .then( () => {
         res.redirect("/orders")
       })
     .catch(err => console.log("Loi tu ORders", err))
