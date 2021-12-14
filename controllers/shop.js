@@ -81,7 +81,6 @@ exports.postDeleteCart = (req, res, next) => {
 }
 
 exports.postOrder = (req, res, next) => {
-  let fetchOrder;
   req.user
     .addOrders()
     .then( result => {
