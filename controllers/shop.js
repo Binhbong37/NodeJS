@@ -1,7 +1,6 @@
 const Product = require('../models/product');
 const Order = require('../models/order');
 
-
 exports.getProducts = (req, res, next) => {
   Product.find()
   .then((products) => {
@@ -113,10 +112,8 @@ exports.postOrder = (req, res, next) => {
 }
 
 exports.getOrders = (req, res, next) => {
-  req.user
-  .getOrder()
+  Order.find({ 'user.name': req.user.name })
   .then(orders => {
-    console.log("KET QUA ORDER: ", orders)
     res.render('shop/orders', {
       path: '/orders',
       pageTitle: 'Your Orders',
