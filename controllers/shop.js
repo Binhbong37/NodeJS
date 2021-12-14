@@ -82,29 +82,11 @@ exports.postDeleteCart = (req, res, next) => {
 
 exports.postOrder = (req, res, next) => {
   let fetchOrder;
-  req.user.getCart()
-  .then( cart => {
-    fetchOrder = cart
-      return cart.getProducts()
-    })
-    .then( products => {
-      req.user.createOrder()
-      .then( order => {
-        return order.addProducts(
-          products.map(product => {
-            product.orderItem = { quantity: product.cartItem.quantity};
-            return product
-          })
-        )
-      })
-      .catch(err => console.log('Loi ORDER'))
-    })
-    .then(result => {
-      return fetchOrder.setProducts(null)
-    })
+  req.user
+    .addOrders()
     .then( result => {
-      res.redirect("/orders")
-    })
+        res.redirect("/orders")
+      })
     .catch(err => console.log("Loi tu ORders"))
 }
 
