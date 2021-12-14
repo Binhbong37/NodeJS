@@ -30,7 +30,7 @@ exports.postAddProduct = (req, res, next) => {
 // Trang ADMIN
 
 exports.getProducts = (req, res, next) => {
-  Product.fetchAll()
+  Product.find()
   // req.user.getProducts()
   .then((products) => {
     console.log(products)
@@ -74,15 +74,15 @@ exports.postEditProduct = (req, res, next) => {
   const updatedPrice = req.body.price;
   const updatedDesc = req.body.description;
 
-  const product = new Product(
-    updatedTitle,
-    updatedPrice,
-    updatedDesc,
-    updatedImageUrl,
-    prodId
-    )
+  Product.findById(prodId)
+  .then(product => {
+    product.title = updatedTitle;
+    product.price = updatedPrice;
+    product.description = updatedDesc;
+    product.imageUrl = updatedImageUrl;
     return product
     .save()
+  })
     .then((result) => {
       console.log('UPDATED')
       res.redirect('/admin/products')
