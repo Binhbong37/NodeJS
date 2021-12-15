@@ -3,18 +3,18 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const session = require("express-session");
-const MongoDBStore = require("connect-mongodb-session")(session)
+const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
 
 const errorController = require('./controllers/error');
 const User = require('./models/user');
-const MONGODB_URI = "mongodb://localhost:27017"
 
+const MONGODB_URI = "mongodb://localhost:27017"
 const app = express();
 const store = new MongoDBStore({
   uri: MONGODB_URI,
   collection: 'sessions'
-})
+});
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
@@ -27,21 +27,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(
   session({
-    secret: "my secret",
+    secret: 'my secret',
     resave: false,
     saveUninitialized: false,
     store: store
   })
-  )
-
-app.use((req, res, next) => {
-  User.findById('61b8421fcb081c04a8a1846c')
-    .then(user => {
-      req.user = user;
-      next();
-    })
-    .catch(err => console.log(err));
-});
+);
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
@@ -56,7 +47,7 @@ mongoose
       if (!user) {
         const user = new User({
           name: 'Max',
-          email: 'abc@gmail.com',
+          email: 'max@test.com',
           cart: {
             items: []
           }
@@ -68,5 +59,5 @@ mongoose
     app.listen(3000);
   })
   .catch(err => {
-    console.log("Loi ket noi vs MONGOOSE");
+    console.log(err);
   });
