@@ -2,12 +2,10 @@ const path = require('path');
 
 const express = require('express');
 const bodyParser = require('body-parser');
-
-const mongoose = require("mongoose")
+const mongoose = require('mongoose');
 
 const errorController = require('./controllers/error');
-
-const User = require("./models/users")
+const User = require('./models/user');
 
 const app = express();
 
@@ -16,42 +14,46 @@ app.set('views', 'views');
 
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
-const req = require('express/lib/request');
+const authRoutes = require('./routes/auth');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
-    User.findById("61b8421fcb081c04a8a1846c")
+  User.findById('61b8421fcb081c04a8a1846c')
     .then(user => {
-        req.user = user
-        next()
+      req.user = user;
+      next();
     })
-    .catch(err => console.log("Loi tai USER tai file app"))
-})
+    .catch(err => console.log(err));
+});
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
+app.use(authRoutes);
 
 app.use(errorController.get404);
 
-mongoose.connect("mongodb://localhost:27017")
-.then(result => {
-    User.findOne()
-    .then(user => {
-        if(!user) {
-            const user = new User({
-                name: "Max",
-                email: "abc@gmail.com",
-                cart: {
-                    items: []
-                }
-            })
-            user.save()
-        }
-    })
-   
+mongoose
+  .connect(
+    "mongodb://localhost:27017"
+  )
+  .then(result => {
+    User.findOne().then(user => {
+      if (!user) {
+        const user = new User({
+          name: 'Max',
+          email: 'abc@gmail.com',
+          cart: {
+            items: []
+          }
+        });
+        user.save();
+      }
+    });
     console.log("Ket noi voi MONGOOSE !!!")
-    app.listen(3000)
-})
-.catch(err => console.log("Loi ket noi MONGOOSE: "))
+    app.listen(3000);
+  })
+  .catch(err => {
+    console.log("Loi ket noi vs MONGOOSE");
+  });

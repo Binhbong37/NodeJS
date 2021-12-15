@@ -1,12 +1,11 @@
-
 const Product = require('../models/product');
 
 exports.getAddProduct = (req, res, next) => {
   res.render('admin/edit-product', {
     pageTitle: 'Add Product',
     path: '/admin/add-product',
-    editing: false
-   
+    editing: false,
+    isAuthenticated: req.isLoggedIn
   });
 };
 
@@ -18,95 +17,88 @@ exports.postAddProduct = (req, res, next) => {
   const product = new Product({
     title: title,
     price: price,
-    description:
-    description,
+    description: description,
     imageUrl: imageUrl,
     userId: req.user
   });
   product
-  .save()
-  .then((result) => {
-    console.log('TAO SP THANH CONG!!')
-    res.redirect('/admin/products')
-  })
-  .catch(err => console.log('Loi tu admin Controller: ', err))
-};
-
-// Trang ADMIN
-
-exports.getProducts = (req, res, next) => {
-  Product.find()
-  // req.user.getProducts()
-  // .select("title price")
-  // .populate("userId", "name")
-  .then((products) => {
-    console.log('Lay cai gi: ',products)
-    console.log(products)
-    res.render('admin/products', {
-      prods: products,
-      pageTitle: 'Admin Products',
-      path: '/admin/products'
+    .save()
+    .then(result => {
+      // console.log(result);
+      console.log('Created Product');
+      res.redirect('/admin/products');
+    })
+    .catch(err => {
+      console.log(err);
     });
-  })
-  .catch(err => console.log('Loi k truy cap dc Admin'))
 };
 
-// Edit Product
 exports.getEditProduct = (req, res, next) => {
   const editMode = req.query.edit;
-  if(!editMode) {
-    return res.redirect("/")
+  if (!editMode) {
+    return res.redirect('/');
   }
   const prodId = req.params.productId;
   Product.findById(prodId)
-  // req.user.getProducts({where: {id: prodId}})
-  .then((product) => {
-      if(!product) {
-        return res.redirect('/')
+    .then(product => {
+      if (!product) {
+        return res.redirect('/');
       }
       res.render('admin/edit-product', {
         pageTitle: 'Edit Product',
         path: '/admin/edit-product',
         editing: editMode,
-        product: product
+        product: product,
+        isAuthenticated: req.isLoggedIn
       });
-  })
-  .catch(err => console.log('loi tu Edit'))
+    })
+    .catch(err => console.log(err));
 };
 
-// // postEditProduct
 exports.postEditProduct = (req, res, next) => {
   const prodId = req.body.productId;
   const updatedTitle = req.body.title;
-  const updatedImageUrl = req.body.imageUrl;
   const updatedPrice = req.body.price;
+  const updatedImageUrl = req.body.imageUrl;
   const updatedDesc = req.body.description;
 
   Product.findById(prodId)
-  .then(product => {
-    product.title = updatedTitle;
-    product.price = updatedPrice;
-    product.description = updatedDesc;
-    product.imageUrl = updatedImageUrl;
-    return product
-    .save()
-  })
-    .then((result) => {
-      console.log('UPDATED')
-      res.redirect('/admin/products')
+    .then(product => {
+      product.title = updatedTitle;
+      product.price = updatedPrice;
+      product.description = updatedDesc;
+      product.imageUrl = updatedImageUrl;
+      return product.save();
     })
-    .catch(err => console.log('Loi k EDIT duoc !!!'))
-}
+    .then(result => {
+      console.log('UPDATED PRODUCT!');
+      res.redirect('/admin/products');
+    })
+    .catch(err => console.log(err));
+};
 
-// XOA SAN PHAM
+exports.getProducts = (req, res, next) => {
+  Product.find()
+    // .select('title price -_id')
+    // .populate('userId', 'name')
+    .then(products => {
+      console.log(products);
+      res.render('admin/products', {
+        prods: products,
+        pageTitle: 'Admin Products',
+        path: '/admin/products',
+        isAuthenticated: req.isLoggedIn
+      });
+    })
+    .catch(err => console.log(err));
+};
 
 exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
   Product.findByIdAndRemove(prodId)
-  .then(result => {
-    console.log('DELETED')
-    res.redirect('/admin/products')
-  })
-  .catch(err => console.log("Loi k xoa dc controller !!"))
- 
-}
+    .then(() => {
+      console.log('DESTROYED PRODUCT');
+      res.redirect('/admin/products');
+    })
+    .catch(err => console.log(err));
+};
