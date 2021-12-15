@@ -13,14 +13,17 @@ const User = require("../models/user")
       .then(user => {
         req.session.isLoggedIn = true;
         req.session.user = user;
-        res.redirect('/');
+        req.session.save(err => {
+          console.log("Da luu vao het: ")
+          res.redirect('/');
+        })
       })
       .catch(err => console.log(err));
   };
   
   exports.postLogout = (req, res, next) => {
     req.session.destroy(err => {
-      console.log("Loi post logOut controller",err);
+      console.log("Da POST duoc LogOut",err);
       res.redirect('/');
     });
   };  
