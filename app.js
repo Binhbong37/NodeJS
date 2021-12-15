@@ -10,6 +10,7 @@ const errorController = require('./controllers/error');
 const User = require('./models/user');
 
 const MONGODB_URI = "mongodb://localhost:27017"
+
 const app = express();
 const store = new MongoDBStore({
   uri: MONGODB_URI,
@@ -33,17 +34,18 @@ app.use(
     store: store
   })
 );
+
 app.use((req, res, next) => {
-  if(!req.session.user) {
-    return next()
+  if (!req.session.user) {
+    return next();
   }
   User.findById(req.session.user._id)
-      .then(user => {
-        req.user = user
-        next()
-      })
-      .catch(err => console.log(err));
-})
+    .then(user => {
+      req.user = user;
+      next();
+    })
+    .catch(err => console.log(err));
+});
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
@@ -54,18 +56,6 @@ app.use(errorController.get404);
 mongoose
   .connect(MONGODB_URI)
   .then(result => {
-    User.findOne().then(user => {
-      if (!user) {
-        const user = new User({
-          name: 'Max',
-          email: 'max@test.com',
-          cart: {
-            items: []
-          }
-        });
-        user.save();
-      }
-    });
     console.log("Ket noi voi MONGOOSE !!!")
     app.listen(3000);
   })
