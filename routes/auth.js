@@ -23,7 +23,15 @@ router.post('/signup',
     }),
     body('password', "Password at least 5 character only text and number !")
     .isLength({min: 5})
-    .isAlphanumeric()
+    .isAlphanumeric(),
+
+    check('confirmPassword')
+    .custom(( value, { req } ) => {
+        if( value !== req.body.password) {
+            throw new Error('Password have to match')
+        }
+        return true
+    })
     
 ],
 
