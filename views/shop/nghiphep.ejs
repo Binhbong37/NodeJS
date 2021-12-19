@@ -1,0 +1,42 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/cart.css">
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+        <main>
+                <ul class="cart__item-list">
+                        <li class="cart__item">
+                            <h1>Thông tin chọn ngày nghỉ </h1>
+            
+                            <!-- <form action="/cart-delete-item" method="POST">
+                                <input type="hidden"  name="productId">
+                                <button class="btn danger" type="submit">Delete</button>
+                            </form> -->
+                        </li>
+                        <hr>
+                        <div>
+                            <label>Ngày nghỉ </label>
+                            <input type="datetime">
+                        </div>
+                        <div>
+                            <label>Lý do </label>
+                            <input type="text">
+                        </div>
+                        <div>
+                            <label>Số giờ sẽ nghỉ: </label>
+                            <input type="datetime">
+                        </div>
+                        <div>
+                            <label>Số ngày nghỉ còn lại </label>
+                            <input type="text" value="7">
+                        </div>
+                </ul>
+                <hr>
+                <div class="centered">
+                    <form action="/create-order" method="POST">
+                        <button type="submit" class="btn">Xác nhận</button>
+                    </form>
+                </div>
+        </main>
+        <%- include('../includes/end.ejs') %>

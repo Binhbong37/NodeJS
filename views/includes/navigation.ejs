@@ -1,0 +1,42 @@
+<div class="backdrop"></div>
+<header class="main-header">
+    <button id="side-menu-toggle">Menu</button>
+    <nav class="main-header__nav">
+        <ul class="main-header__item-list">
+            <li class="main-header__item">
+                <a class="<%= path === '/' ? 'active' : '' %>" href="/">Điểm danh/kết thúc</a>
+            </li>
+            <li class="main-header__item">
+                <a class="<%= path === '/thong-tin-ca-nhan' ? 'active' : '' %>" href="/thong-tin-ca-nhan">Xem/Sửa thông tin cá nhân</a>
+            </li>
+            <li class="main-header__item">
+                <a class="<%= path === '/thong-tin-gio-lam' ? 'active' : '' %>" href="/thong-tin-gio-lam">Tra cứu thông tin giờ làm</a>
+            </li>
+            <li class="main-header__item">
+                <a class="<%= path === '/thong-tin-covid' ? 'active' : '' %>" href="/thong-tin-covid">Thông tin COVID</a>
+            </li>
+        </ul>
+        <ul class="main-header__item-list">
+            <li class="main-header__item">
+                <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<nav class="mobile-nav">
+    <ul class="mobile-nav__item-list">
+        <li class="mobile-nav__item">
+            <a class="<%= path === '/' ? 'active' : '' %>" href="/">Điểm danh/kết thúc</a>
+        </li>
+        <li class="mobile-nav__item">
+            <a class="<%= path === '/products' ? 'active' : '' %>" href="/products">Xem/Sửa thông tin cá nhân</a>
+        </li>
+        <li class="mobile-nav__item">
+            <a class="<%= path === '/cart' ? 'active' : '' %>" href="/cart">Tra cứu thông tin giờ làm</a>
+        </li>
+        <li class="mobile-nav__item">
+            <a class="<%= path === '/orders' ? 'active' : '' %>" href="/orders">Thông tin COVID</a>
+        </li>
+    </ul>
+</nav>

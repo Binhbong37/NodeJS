@@ -1,0 +1,33 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/cart.css">
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+        <main>
+                <ul class="cart__item-list">
+                        <li class="cart__item">
+                            <h1>Danh sách giờ đã làm </h1>
+            
+                            <!-- <form action="/cart-delete-item" method="POST">
+                                <input type="hidden"  name="productId">
+                                <button class="btn danger" type="submit">Delete</button>
+                            </form> -->
+                        </li>
+                        <hr>
+                        <h3>Ngày làm việc: </h3>
+                        <h3>Giờ bắt đầu: </h3>
+                        <h3>Giờ kết thúc: </h3>
+                        <h3>Nơi làm việc: </h3>
+                        <h3>Số giờ được tính là làm thêm: </h3>
+                        <h3>annualLeave đã đăng ký: </h3>
+                        <h3>Tổng số giờ đã làm của lần bắt đầu/kết thúc này: </h3>
+                </ul>
+                <hr>
+                <div class="centered">
+                    <form action="/create-order" method="POST">
+                        <button type="submit" class="btn">Order Now!</button>
+                    </form>
+                </div>
+        </main>
+        <%- include('../includes/end.ejs') %>
