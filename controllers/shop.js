@@ -1,29 +1,22 @@
-// const Product = require('../models/product');
+
+const information = require('../models/information');
+const Information = require('../models/information');
 // const Order = require('../models/order');
 
 exports.getProducts = (req, res, next) => {
-      res.render('shop/product-list', {
-        pageTitle: 'Xem/Sửa thông tin',
-        path: '/thong-tin-ca-nhan'
-      });
+  Information.find()
+  .then( information => {
+    console.log(information)
+    res.render('shop/product-list', {
+      pageTitle: 'Xem/Sửa thông tin',
+      path: '/thong-tin-ca-nhan',
+      information: information
+    });
+    
+  })
+  .catch(err => console.log("Loi k in ra dc JSON"))
+  
 };
-
-// exports.getProduct = (req, res, next) => {
-//   const prodId = req.params.productId;
-//   Product.findById(prodId)
-//     .then(product => {
-//       res.render('shop/product-detail', {
-//         product: product,
-//         pageTitle: product.title,
-//         path: '/products'
-//       });
-//     })
-//     .catch(err => {
-//       const error = new Error(err);
-//       error.httpStatusCode = 500;
-//       return next(error);
-//     });
-// };
 
 exports.getIndex = (req, res, next) => {
       res.render('shop/index', {
@@ -40,66 +33,6 @@ exports.getCart = (req, res, next) => {
       });
 };
 
-// exports.postCart = (req, res, next) => {
-//   const prodId = req.body.productId;
-//   Product.findById(prodId)
-//     .then(product => {
-//       return req.user.addToCart(product);
-//     })
-//     .then(result => {
-//       console.log(result);
-//       res.redirect('/cart');
-//     })
-//     .catch(err => {
-//       const error = new Error(err);
-//       error.httpStatusCode = 500;
-//       return next(error);
-//     });
-// };
-
-// exports.postCartDeleteProduct = (req, res, next) => {
-//   const prodId = req.body.productId;
-//   req.user
-//     .removeFromCart(prodId)
-//     .then(result => {
-//       res.redirect('/cart');
-//     })
-//     .catch(err => {
-//       const error = new Error(err);
-//       error.httpStatusCode = 500;
-//       return next(error);
-//     });
-// };
-
-// exports.postOrder = (req, res, next) => {
-//   req.user
-//     .populate('cart.items.productId')
-//     .execPopulate()
-//     .then(user => {
-//       const products = user.cart.items.map(i => {
-//         return { quantity: i.quantity, product: { ...i.productId._doc } };
-//       });
-//       const order = new Order({
-//         user: {
-//           email: req.user.email,
-//           userId: req.user
-//         },
-//         products: products
-//       });
-//       return order.save();
-//     })
-//     .then(result => {
-//       return req.user.clearCart();
-//     })
-//     .then(() => {
-//       res.redirect('/orders');
-//     })
-//     .catch(err => {
-//       const error = new Error(err);
-//       error.httpStatusCode = 500;
-//       return next(error);
-//     });
-// };
 
 exports.getOrders = (req, res, next) => {
       res.render('shop/orders', {
@@ -110,10 +43,16 @@ exports.getOrders = (req, res, next) => {
 };
 
 exports.confirmName = (req, res, next) => {
-  res.render('shop/confirmName', {
-    path: '/add-product',
-    pageTitle: 'Xác nhận làm việc'
+  Information.find()
+  .then(information => {
+    res.render('shop/confirmName', {
+      path: '/add-product',
+      pageTitle: 'Xác nhận làm việc',
+      information: information
+    })
   })
+  .catch(err => console.log("Loi o xa nhan nhan vien controller"))
+ 
 }
 
 exports.nghiPhep = (req, res, next) => {
