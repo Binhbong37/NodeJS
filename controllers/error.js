@@ -12,5 +12,5 @@ exports.get500 = (req, res, next) => {
     path: '/500',
     isAuthenticated: req.session.isLoggedIn
   });
-  console.log(req.session)
+  console.log(req.session.isLoggedIn)
 };
