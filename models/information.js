@@ -9,7 +9,7 @@ const productSchema = new Schema({
     required: true
   },
   doB: {
-    type: Date,
+    type: String,
     required: true
   },
   salaryScale: {
@@ -17,7 +17,7 @@ const productSchema = new Schema({
     required: true
   },
   startDate: {
-    type: Date,
+    type: String,
     required: true
   },
   department: {
@@ -31,6 +31,9 @@ const productSchema = new Schema({
   Image: {
     type: String,
     required: true
+  },
+  checkInId: {
+    type: Schema.Types.ObjectId, ref: 'Checkin', required: true
   }
 });
 

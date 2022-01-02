@@ -7,28 +7,19 @@
    <%- include('../includes/navigation.ejs') %>
 
     <main>
-        <% if( information.length > 0) { %>
-        <form class="product-form" action="/active-name" method="POST">
-            <% for(let inf of information) { %>
+        <form class="product-form" action="/check-in" method="POST"> 
             <div class="form-control">
                 <label for="name"><h2>Họ và tên</h2></label>
-                <input type="text" name="name" id="name" value="<%= inf.name %>">
             </div>
             <div class="form-control">
                 <label for="place"><h2>Nơi làm việc</h2></label>
-                <select style="width: 100%; height: 25px;">
+                <select style="width: 100%; height: 25px;" name="place">
                     <option value="1">Công ty</option>
                     <option value="2">Nhà</option>
                     <option value="3">Khách hàng</option>
                 </select>
             </div>
             <button class="btn" type="submit">Xác nhận</button>
-            <% } %>
         </form>
-        <% } else { %>
-            <div>
-                Khong co nguoi nao ca
-            </div>
-        <% } %>
     </main>
 <%- include('../includes/end.ejs') %>

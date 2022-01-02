@@ -1,0 +1,25 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/orders.css">
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+        <main>
+            <% if (result.length > 0) { %>
+                <ul class="orders">
+                    <% for (let prod of result) { %> 
+                        <li class="orders__item">
+                            <h1>Tổng giờ làm: <%= prod.total %> </h1>
+                            <ul class="orders__products">
+                                <li class="orders__products-item">Giờ vào: <%= prod.startTime %></li>
+                                <li class="orders__products-item">Giờ kết thúc: <%= prod.endTime %></li>
+                                <li class="orders__products-item">Địa điểm làm việc: <%= prod.place %></li>
+                            </ul>
+                        </li>
+                    <% } %>
+                </ul>
+            <% } else { %>
+                <h1>No Products Found!</h1>
+                <% } %>      
+        </main>
+        <%- include('../includes/end.ejs') %>
