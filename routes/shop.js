@@ -19,6 +19,10 @@ router.post('/check-out', shopController.postCheckOut);
 
 router.get('/thong-tin-ca-nhan', shopController.getInfStaff);
 
+router.get('/edit-staff', shopController.getEditStaff);
+
+router.post('/edit-staff', shopController.postEditStaff);
+
 // router.get('/thong-tin-gio-lam', shopController.getCart);
 
 // router.get('/thong-tin-covid', shopController.getOrders);

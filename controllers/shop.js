@@ -64,17 +64,18 @@ exports.getCheckout = (req, res) => {
     TimeTable.find()
         .then((result) => {
             result = result.map((abc) => {
+                const sumOfTime =
+                    new Date(abc.updatedAt) - new Date(abc.createdAt);
+                console.log(moment(sumOfTime).format('LT'));
                 return {
                     startTime: moment(abc.createdAt).format('LT'),
                     endTime: moment(abc.updatedAt).format('LT'),
                     place: abc.place,
-                    total:
-                        parseInt(moment(abc.updatedAt).format('LT')) -
-                        parseInt(moment(abc.createdAt).format('LT')),
+                    total: moment(sumOfTime).format('LT'),
                 };
             });
             res.render('shop/thongtingiolam', {
-                path: '/thong-tin-gio-lam',
+                path: '',
                 pageTitle: ' thông tin giờ làm',
                 result: result,
             });
@@ -92,7 +93,7 @@ exports.postCheckOut = (req, res) => {
             return result.save();
         })
         .then(() => {
-            console.log('UPDATED PRODUCT!');
+            console.log('GET CHECKOUT !');
             res.redirect('/check-out');
         })
         .catch((err) => console.log(err));
@@ -101,14 +102,55 @@ exports.postCheckOut = (req, res) => {
 exports.getInfStaff = (req, res, next) => {
     Staff.find()
         .then((user) => {
-            console.log(user);
+            const staff = {
+                name: user[0].name,
+                doB: moment(user[0].doB).format('LL'),
+                salaryScale: user[0].salaryScale,
+                startDate: moment(user[0].startDate).format('LL'),
+                department: user[0].department,
+                annualLeave: user[0].annualLeave,
+                imageUrl: user[0].imageUrl,
+            };
             res.render('shop/infoStaff', {
                 path: '/thong-tin-ca-nhan',
                 pageTitle: 'Thông tin cá nhân',
-                staff: user,
+                staff: [staff],
             });
         })
         .catch((err) => console.log('K lay dc Staff controller'));
+};
+
+exports.getEditStaff = (req, res) => {
+    Staff.find().then((user) => {
+        const staff = {
+            name: user[0].name,
+            doB: moment(user[0].doB).format('LL'),
+            salaryScale: user[0].salaryScale,
+            startDate: moment(user[0].startDate).format('LL'),
+            department: user[0].department,
+            annualLeave: user[0].annualLeave,
+            imageUrl: user[0].imageUrl,
+        };
+        res.render('shop/editInfo', {
+            path: '',
+            pageTitle: 'Chỉnh sửa thông tin',
+            staff: [staff],
+        });
+    });
+};
+
+exports.postEditStaff = (req, res) => {
+    const imageUrl = req.body.imageUrl;
+    const id = req.user._id;
+    Staff.findById(id)
+        .then((staff) => {
+            staff.imageUrl = imageUrl;
+            return staff.save();
+        })
+        .then(() => {
+            console.log('ImageUrl UPDATED SUCCESS !');
+            res.redirect('/thong-tin-ca-nhan');
+        });
 };
 // exports.getCart = (req, res, next) => {
 

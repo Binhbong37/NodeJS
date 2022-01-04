@@ -1,0 +1,55 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/product.css">
+    <link rel="stylesheet" href="/css/forms.css">
+
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+
+            <main>
+                <form action="/edit-staff" method="POST">
+                    <% if(staff.length > 0) { %>
+                        <div class="grid">
+                            <% for( let inf of staff) { %> 
+                                <article class="card product-item">
+                                    <div class="card__content">
+                                        <h2 class="product__price">
+                                            <%= inf.name %>
+                                        </h2>
+                                    </div>
+                                    <header class="card__header">
+                                        <p class="product__title">
+                                            doB: <%= inf.doB %>
+                                        </p>
+                                        <p class="product__title">
+                                            salaryScale: <%= inf.salaryScale %>
+                                        </p>
+                                        <p class="product__title">
+                                            startDate: <%= inf.startDate %>
+                                        </p>
+                                        <p class="product__title">
+                                            department: <%= inf.department %>
+                                        </p>
+                                        <p class="product__title">
+                                            annualLeave: <%= inf.annualLeave %>
+                                        </p>
+                                        <div class="form-control">
+                                            <label for="imageUrl"><p>Image URL</p></label>
+                                            <input type="text" name="imageUrl" id="imageUrl" value="<%= inf.imageUrl %>">
+                                        </div>
+                                    </header>
+                                    <div class="card__actions">
+                                        <button type="submit" class="btn">Cập nhật</button>
+                                    </div>
+                                </article>
+                            <% } %>
+                        </div>
+                    <% } else { %>
+                        <div>
+                            Khong co ket qua hien thi
+                        </div>
+                    <% } %>
+                </form>
+            </main>
+            <%- include('../includes/end.ejs') %>
