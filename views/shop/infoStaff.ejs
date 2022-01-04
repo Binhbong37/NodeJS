@@ -6,13 +6,13 @@
         <%- include('../includes/navigation.ejs') %>
 
             <main>
-                <% if(information.length > 0) { %>
+                <% if(staff.length > 0) { %>
                     <div class="grid">
-                        <% for( let inf of information) { %> 
+                        <% for( let inf of staff) { %> 
                             <article class="card product-item">
                                 <div class="card__content">
                                     <h2 class="product__price">
-                                        Họ và tên: <%= inf.name %>
+                                        <%= inf.name %>
                                     </h2>
                                 </div>
                                 <header class="card__header">

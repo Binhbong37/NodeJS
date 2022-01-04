@@ -1,4 +1,5 @@
 const TimeTable = require('../models/timeTable');
+const Staff = require('../models/staff');
 const moment = require('moment');
 
 exports.getIndex = (req, res, next) => {
@@ -47,6 +48,7 @@ exports.postCheckIn = (req, res, next) => {
     const checkIn = new TimeTable({
         status: true,
         place: place,
+        staffId: req.user,
     });
 
     checkIn
@@ -95,6 +97,19 @@ exports.postCheckOut = (req, res) => {
         })
         .catch((err) => console.log(err));
 };
+
+exports.getInfStaff = (req, res, next) => {
+    Staff.find()
+        .then((user) => {
+            console.log(user);
+            res.render('shop/infoStaff', {
+                path: '/thong-tin-ca-nhan',
+                pageTitle: 'Thông tin cá nhân',
+                staff: user,
+            });
+        })
+        .catch((err) => console.log('K lay dc Staff controller'));
+};
 // exports.getCart = (req, res, next) => {
 
 //       res.render('shop/cart', {
@@ -110,10 +125,3 @@ exports.postCheckOut = (req, res) => {
 //       });
 
 // };
-
-// exports.nghiPhep = (req, res, next) => {
-//   res.render('shop/nghiphep', {
-//     path: '/add-product',
-//     pageTitle: 'Xác nhận xin nghỉ'
-//   })
-// }

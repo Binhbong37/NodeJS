@@ -3,10 +3,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const onLeaveSchema = new Schema({
-    daysOff: { type: Date, required: true },
+    startDaysOff: { type: Date, required: true },
+    endDaysOff: { type: Date, required: true },
     reason: { type: String, required: true },
     annualLeave: { type: Number, default: 12 },
-    hoursOff: { type: Date, required: true },
+    hourOff: { type: Number, required: true },
 });
 
 module.exports = mongoose.model('OnLeave', onLeaveSchema);

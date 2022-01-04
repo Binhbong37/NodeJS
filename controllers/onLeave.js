@@ -13,7 +13,23 @@ exports.postOnLeave = (req, res) => {
 
     const reason = req.body.reason;
     const hourOff = req.body.hourOff;
-    const abc = endDaysOff - startDaysOff;
-    console.log(startDaysOff, reason, hourOff, abc);
-    res.redirect('/');
+
+    const onLeave = new OnLeave({
+        startDaysOff,
+        endDaysOff,
+        reason,
+        hourOff,
+    });
+    let annual = onLeave.annualLeave;
+    let hour = onLeave.hourOff;
+    if (hour > annual) {
+        return res.redirect('xin-nghi-phep');
+    }
+    onLeave
+        .save()
+        .then(() => {
+            console.log('Tao ngay nghi');
+            res.redirect('/');
+        })
+        .catch((err) => console.log('TAO NGAY NGHI THAT BAI'));
 };

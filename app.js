@@ -11,20 +11,22 @@ app.set('views', 'views');
 
 const errorController = require('./controllers/error');
 
+const Staff = require('./models/staff');
+
 const shopRoutes = require('./routes/shop');
 const onLeaveRoutes = require('./routes/onLeave');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use((req, res, next) => {
-//     User.findById('61bfeb4a3116f15c65cc7cee')
-//         .then((user) => {
-//             req.user = user;
-//             next();
-//         })
-//         .catch((err) => console.log('k tim dc id nguoi dung'));
-// });
+app.use((req, res, next) => {
+    Staff.findById('61d400a5787aa5263c1bea0a')
+        .then((user) => {
+            req.user = user;
+            next();
+        })
+        .catch((err) => console.log('k tim dc id nguoi dung'));
+});
 
 app.use(shopRoutes);
 app.use(onLeaveRoutes);
@@ -37,6 +39,22 @@ mongoose
     .connect(MONGODB_URI, {
         useUnifiedTopology: true,
         useNewUrlParser: true,
+    })
+    .then((result) => {
+        Staff.findOne().then((user) => {
+            if (!user) {
+                const newUser = new Staff({
+                    name: 'Nguyễn văn A',
+                    doB: '2001-10-21',
+                    salaryScale: 3,
+                    startDate: '2022-01-20',
+                    department: 'IT',
+                    annualLeave: 12,
+                    imageUrl: 'abcd',
+                });
+                newUser.save();
+            }
+        });
     })
     .then(() => {
         console.log('Ket noi voi MONGOOSE ASM !!!');
