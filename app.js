@@ -9,7 +9,10 @@ const mongoose = require('mongoose');
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
+const errorController = require('./controllers/error');
+
 const shopRoutes = require('./routes/shop');
+const onLeaveRoutes = require('./routes/onLeave');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -24,8 +27,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 // });
 
 app.use(shopRoutes);
-// app.use(checkInRoutes);
-// app.use(checkOutRoutes);
+app.use(onLeaveRoutes);
+
+app.use(errorController.get404);
 
 const MONGODB_URI = 'mongodb://localhost:27017/funix_njs_asm';
 

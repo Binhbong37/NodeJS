@@ -7,19 +7,30 @@
    <%- include('../includes/navigation.ejs') %>
 
     <main>
-        <form class="product-form" action="/check-in" method="POST"> 
+        <form class="product-form" action="/<% if (active) { %>check-in<% } else { %>check-out<% } %>" method="POST"> 
             <div class="form-control">
-                <label for="name"><h2>Họ và tên</h2></label>
+                <label for="name"><h2>Họ và tên: Nguyen van A</h2></label>
             </div>
-            <div class="form-control">
-                <label for="place"><h2>Nơi làm việc</h2></label>
-                <select style="width: 100%; height: 25px;" name="place">
-                    <option value="1">Công ty</option>
-                    <option value="2">Nhà</option>
-                    <option value="3">Khách hàng</option>
-                </select>
-            </div>
-            <button class="btn" type="submit">Xác nhận</button>
+            <% if (active) { %>
+                <div class="form-control">
+                    <label for="place"><h2>Nơi làm việc</h2></label>
+                    <select style="width: 100%; height: 25px;" name="place" >
+                        <option value="1">Công ty</option>
+                        <option value="2">Nhà</option>
+                        <option value="3">Khách hàng</option>
+                    </select>
+                </div>  
+            <% } else { %>
+                <div class="form-control">
+                    <label for="place"><h2>Nơi làm việc: <%= status.place %> </h2></label>
+                </div>
+            <% } %>
+            <% if (!active) { %>
+                <input type="hidden" name='idCh' value="<%= status._id %>">
+            <% } %>
+            <button class="btn" type="submit">
+                <% if(active) { %> Xác nhận <% } else { %> Kết thúc <% } %>
+            </button>
         </form>
     </main>
 <%- include('../includes/end.ejs') %>

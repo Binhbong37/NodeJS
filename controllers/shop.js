@@ -21,12 +21,25 @@ exports.getIndex = (req, res, next) => {
         .catch((err) => console.log('K tim dc nguoi dung'));
 };
 
-exports.getCheckIn = (req, res, next) => {
+exports.getConfirmCheckIn = (req, res, next) => {
     res.render('shop/confirmName', {
         path: '/add-product',
         pageTitle: 'Xác nhận làm việc',
-        active: false,
+        active: true,
     });
+};
+
+exports.getConfirmCheckOut = (req, res, next) => {
+    TimeTable.find({ status: true })
+        .then((result) => {
+            res.render('shop/confirmName', {
+                path: '/add-product',
+                pageTitle: 'Xác nhận kết thúc',
+                active: false,
+                status: result[0],
+            });
+        })
+        .catch((err) => console.log('k tim dc checkIn'));
 };
 
 exports.postCheckIn = (req, res, next) => {

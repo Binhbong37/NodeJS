@@ -1,5 +1,3 @@
-const path = require('path');
-
 const express = require('express');
 
 const shopController = require('../controllers/shop');
@@ -9,7 +7,9 @@ const router = express.Router();
 router.get('/', shopController.getIndex);
 
 // xác nhận cho làm việc
-router.get('/xac-nhan-lam-viec', shopController.getCheckIn);
+router.get('/xac-nhan-lam-viec', shopController.getConfirmCheckIn);
+
+router.get('/xac-nhan-ket-thuc-lam', shopController.getConfirmCheckOut);
 
 router.post('/check-in', shopController.postCheckIn);
 
