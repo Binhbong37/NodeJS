@@ -64,14 +64,15 @@ exports.getCheckout = (req, res) => {
     TimeTable.find()
         .then((result) => {
             result = result.map((abc) => {
-                const sumOfTime =
-                    new Date(abc.updatedAt) - new Date(abc.createdAt);
-                console.log(moment(sumOfTime).format('LT'));
+                const bc = new Date(abc.updatedAt);
+                const ab = new Date(abc.createdAt);
+                const sumTime = Math.abs(bc - ab) / 36e5;
+                const time = (Math.round(sumTime * 100) / 100).toFixed(2);
                 return {
                     startTime: moment(abc.createdAt).format('LT'),
                     endTime: moment(abc.updatedAt).format('LT'),
                     place: abc.place,
-                    total: moment(sumOfTime).format('LT'),
+                    total: time,
                 };
             });
             res.render('shop/thongtingiolam', {
@@ -152,18 +153,10 @@ exports.postEditStaff = (req, res) => {
             res.redirect('/thong-tin-ca-nhan');
         });
 };
-// exports.getCart = (req, res, next) => {
 
-//       res.render('shop/cart', {
-//         path: '/thong-tin-gio-lam',
-//         pageTitle: 'Tra cứu thông tin giờ làm',
-//       });
-// };
-
-// exports.getOrders = (req, res, next) => {
-//       res.render('shop/orders', {
-//         path: '/thong-tin-covid',
-//         pageTitle: 'Thông tin Covid',
-//       });
-
-// };
+exports.getCovid = (req, res, next) => {
+    res.render('shop/covid', {
+        path: '/thong-tin-covid',
+        pageTitle: 'Thông tin Covid',
+    });
+};

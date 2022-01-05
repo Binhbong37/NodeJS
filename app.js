@@ -15,6 +15,7 @@ const Staff = require('./models/staff');
 
 const shopRoutes = require('./routes/shop');
 const onLeaveRoutes = require('./routes/onLeave');
+const gioLamRoutes = require('./routes/tonghopgiolam');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -30,6 +31,7 @@ app.use((req, res, next) => {
 
 app.use(shopRoutes);
 app.use(onLeaveRoutes);
+app.use(gioLamRoutes);
 
 app.use(errorController.get404);
 

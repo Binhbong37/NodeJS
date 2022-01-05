@@ -23,8 +23,6 @@ router.get('/edit-staff', shopController.getEditStaff);
 
 router.post('/edit-staff', shopController.postEditStaff);
 
-// router.get('/thong-tin-gio-lam', shopController.getCart);
-
-// router.get('/thong-tin-covid', shopController.getOrders);
+router.get('/thong-tin-covid', shopController.getCovid);
 
 module.exports = router;
