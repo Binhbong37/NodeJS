@@ -10,7 +10,7 @@
                 <h1><a href="/xac-nhan-lam-viec/?active=true" class="btn">ĐIỂM DANH</a></h1> 
             </div>
             <div class="card__actions">
-                <h1><a href="/xac-nhan-ket-thuc-lam" class="btn">KẾT THÚC</a></h1> 
+                <h1><a href="/xac-nhan-ket-thuc-lam/?active=false" class="btn">KẾT THÚC</a></h1> 
             </div>
             <div class="card__actions">
                 <h1><a href="/xin-nghi-phep" class="btn">NGHỈ PHÉP</a></h1>
@@ -20,9 +20,9 @@
             <% if(prod.status) { %>
                 <div class="grid">
                     <div class="card__actions">
-                        <h2>StartTime: <%= prod.startTime %></h2>
-                        <h2>Place: <%= prod.place %></h2>
-                        <h2>Active:</h2>
+                        <h2>Thời gian bắt đầu: <%= prod.startTime %></h2>
+                        <h2>Nơi làm việc: <%= prod.place == 1 ? 'Công ty' : prod.place == 2 ? 'Ở Nhà' : 'Làm việc ngoài' %></h2>
+                        <h2>Trạng thái: Đang làm việc </h2>
                     </div>
                 </div>
             <% } %>

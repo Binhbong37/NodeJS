@@ -33,26 +33,40 @@ exports.getConfirmCheckIn = (req, res, next) => {
 exports.getConfirmCheckOut = (req, res, next) => {
     TimeTable.find({ status: true })
         .then((result) => {
-            res.render('shop/confirmName', {
+            let getResult;
+            if (result.length <= 0) {
+                getResult = result;
+            } else {
+                getResult = {
+                    place: result[0].place,
+                    dateNow: moment(new Date()).format('LT'),
+                };
+            }
+
+            console.log('den chua: ', getResult);
+            res.render('shop/confirmCheckout', {
                 path: '/add-product',
                 pageTitle: 'Xác nhận kết thúc',
-                active: false,
-                status: result[0],
+                status: [getResult],
             });
         })
-        .catch((err) => console.log('k tim dc checkIn'));
+        .catch((err) => console.log('k tim dc checkIn: ', err));
 };
 
 exports.postCheckIn = (req, res, next) => {
     const place = req.body.place;
-    const checkIn = new TimeTable({
-        status: true,
-        place: place,
-        staffId: req.user,
-    });
-
-    checkIn
-        .save()
+    TimeTable.findOne({ status: true })
+        .then((haveCheckIn) => {
+            console.log(haveCheckIn);
+            if (!haveCheckIn) {
+                const checkIn = new TimeTable({
+                    status: true,
+                    place: place,
+                    staffId: req.user,
+                });
+                checkIn.save();
+            }
+        })
         .then(() => {
             console.log('tao dc checkIn');
             res.redirect('/');
@@ -69,15 +83,21 @@ exports.getCheckout = (req, res) => {
                 const sumTime = Math.abs(bc - ab) / 36e5;
                 const time = (Math.round(sumTime * 100) / 100).toFixed(2);
                 return {
+                    workDay: moment(abc.createdAt).format('LL'),
                     startTime: moment(abc.createdAt).format('LT'),
                     endTime: moment(abc.updatedAt).format('LT'),
-                    place: abc.place,
+                    place:
+                        abc.place == 1
+                            ? 'Công ty'
+                            : abc.place == 2
+                            ? 'Ở nhà'
+                            : 'Làm việc ngoài',
                     total: time,
                 };
             });
             res.render('shop/thongtingiolam', {
                 path: '',
-                pageTitle: ' thông tin giờ làm',
+                pageTitle: 'Thông tin giờ làm',
                 result: result,
             });
         })
@@ -85,11 +105,9 @@ exports.getCheckout = (req, res) => {
 };
 
 exports.postCheckOut = (req, res) => {
-    const id = req.body.idCh;
-    const status = false;
-    TimeTable.findById(id)
+    TimeTable.findOne({ status: true })
         .then((result) => {
-            result.status = status;
+            result.status = false;
 
             return result.save();
         })
