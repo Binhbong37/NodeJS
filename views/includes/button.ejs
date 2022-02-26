@@ -1,12 +1,10 @@
 <div class="grid">
-    <!-- <div class="card__actions">
-                <h1><a href="/xac-nhan-lam-viec/?active=true" class="btn">ĐIỂM DANH</a></h1> 
-            </div> -->
     <div class="card__actions">
-        <form action="/xac-nhan-lam-viec/?active=true" method="GET">
-            <h1><button class="btn" type="submit">ĐIỂM DANH</button></h1>
-            <input type="hidden" name="mode" value="start" />
-        </form>
+        <% if (result.length !== 1) { %>
+        <h1>
+            <a href="/xac-nhan-lam-viec/?active=true" class="btn">ĐIỂM DANH</a>
+        </h1>
+        <% } %>
     </div>
     <div class="card__actions">
         <h1>

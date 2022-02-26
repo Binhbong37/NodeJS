@@ -3,17 +3,22 @@ const Staff = require('../models/staff');
 const moment = require('moment');
 
 exports.getIndex = (req, res, next) => {
-    TimeTable.find()
+    TimeTable.find({ status: true })
         .then((result) => {
             result = result.map((abc) => {
                 return {
                     startTime: moment(abc.createdAt).format('LT'),
-                    place: abc.place,
+                    place:
+                        abc.place === '1'
+                            ? 'Công ty'
+                            : abc.place === '2'
+                            ? 'Ở nhà'
+                            : 'KH',
                     status: abc.status,
                     id: abc._id,
                 };
             });
-            res.render('shop/index', {
+            res.render('worktime/index', {
                 pageTitle: 'Điểm danh/kết thúc',
                 path: '/',
                 result: result,
@@ -23,7 +28,7 @@ exports.getIndex = (req, res, next) => {
 };
 
 exports.getConfirmCheckIn = (req, res, next) => {
-    res.render('shop/confirmName', {
+    res.render('worktime/confirmName', {
         path: '/add-product',
         pageTitle: 'Xác nhận làm việc',
         active: true,
@@ -46,7 +51,7 @@ exports.getConfirmCheckOut = (req, res, next) => {
             }
 
             console.log('den chua: ', getResult);
-            res.render('shop/confirmCheckout', {
+            res.render('worktime/confirmCheckout', {
                 path: '/add-product',
                 pageTitle: 'Xác nhận kết thúc',
                 status: getResult,
@@ -79,11 +84,22 @@ exports.postCheckIn = (req, res, next) => {
 exports.getCheckout = (req, res) => {
     TimeTable.find()
         .then((result) => {
+            result = result.filter((res) => {
+                const today = moment(new Date()).format('MMM Do YY');
+                const checkToday = moment(res.createdAt).format('MMM Do YY');
+                return today === checkToday;
+            });
+            return result;
+        })
+        .then((result) => {
+            let totalTime = 0;
             result = result.map((abc) => {
                 const bc = new Date(abc.updatedAt);
                 const ab = new Date(abc.createdAt);
                 const sumTime = Math.abs(bc - ab) / 36e5;
                 const time = (Math.round(sumTime * 100) / 100).toFixed(2);
+                const timeTotal = parseFloat(time);
+                totalTime += timeTotal;
                 return {
                     workDay: moment(abc.createdAt).format('LL'),
                     startTime: moment(abc.createdAt).format('LT'),
@@ -97,10 +113,11 @@ exports.getCheckout = (req, res) => {
                     total: time,
                 };
             });
-            res.render('shop/thongtingiolam', {
+            res.render('worktime/ketthuclam', {
                 path: '',
-                pageTitle: 'Thông tin giờ làm',
+                pageTitle: 'Thông tin giờ làm hôm nay',
                 result: result,
+                totalTime: Math.round(totalTime * 100) / 100,
             });
         })
         .catch((err) => console.log('NOT GET CHECK OUT !!!'));

@@ -10,7 +10,6 @@ exports.getOnLeave = (req, res) => {
 exports.postOnLeave = (req, res) => {
     const startDaysOff = req.body.startDaysOff;
     const endDaysOff = req.body.endDaysOff;
-
     const reason = req.body.reason;
     const hourOff = req.body.hourOff;
 
@@ -20,11 +19,6 @@ exports.postOnLeave = (req, res) => {
         reason,
         hourOff,
     });
-    let annual = onLeave.annualLeave;
-    let hour = onLeave.hourOff;
-    if (hour > annual) {
-        return res.redirect('xin-nghi-phep');
-    }
     onLeave
         .save()
         .then(() => {
