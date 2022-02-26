@@ -37,17 +37,19 @@ exports.getConfirmCheckOut = (req, res, next) => {
             if (result.length <= 0) {
                 getResult = result;
             } else {
-                getResult = {
-                    place: result[0].place,
-                    dateNow: moment(new Date()).format('LT'),
-                };
+                getResult = [
+                    {
+                        place: result[0].place,
+                        dateNow: moment(new Date()).format('LT'),
+                    },
+                ];
             }
 
             console.log('den chua: ', getResult);
             res.render('shop/confirmCheckout', {
                 path: '/add-product',
                 pageTitle: 'Xác nhận kết thúc',
-                status: [getResult],
+                status: getResult,
             });
         })
         .catch((err) => console.log('k tim dc checkIn: ', err));
@@ -170,11 +172,4 @@ exports.postEditStaff = (req, res) => {
             console.log('ImageUrl UPDATED SUCCESS !');
             res.redirect('/thong-tin-ca-nhan');
         });
-};
-
-exports.getCovid = (req, res, next) => {
-    res.render('shop/covid', {
-        path: '/thong-tin-covid',
-        pageTitle: 'Thông tin Covid',
-    });
 };

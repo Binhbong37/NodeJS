@@ -10,7 +10,7 @@
         <form class="product-form" action="/xin-nghi-phep" method="POST">
             <div class="form-control">
                 <label for="title">Từ ngày</label>
-                <input type="date" name="startDaysOff" id="title">
+                <input type="text" name="startDaysOff" id="title">
             </div>
             <div class="form-control">
                 <label for="title">Đến ngày</label>
@@ -33,4 +33,35 @@
             <button class="btn" type="submit">Xác nhận</button>
         </form>
     </main>
-<%- include('../includes/end.ejs') %>
+    <script
+    type="text/javascript"
+    src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"
+></script>
+<script
+    type="text/javascript"
+    src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"
+></script>
+<script
+    type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"
+></script>
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"
+/>
+<script>
+    $(function () {
+        $('input[name="startDaysOff"]').daterangepicker({
+            timePicker: true,
+            startDate: moment().startOf('hour'),
+            endDate: moment().startOf('hour').add(32, 'hour'),
+            locale: {
+                format: 'DD/M/YY A',
+            },
+        });
+    });
+</script>
+</body>
+
+</html>

@@ -1,33 +1,62 @@
 <%- include('../includes/head.ejs') %>
-    <link rel="stylesheet" href="/css/orders.css">
+    <link rel="stylesheet" href="/css/product.css">
     </head>
 
     <body>
         <%- include('../includes/navigation.ejs') %>
-        <main>
-                <h1>Đăng ký COVID</h1>
-                <ul class="orders">
-                        <li class="orders__item">
-                            <h1>Đăng ký thông tin thân nhiệt</h1>
-                            <ul class="orders__products">
-                                Ngày đăng ký: <input type="date" />
-                                Giờ đăng ký: <input type="datetime" />
-                            </ul>
-                        </li>
-                        <li class="orders__item">
-                            <h1>Đăng ký thông tin tiêm vaccine</h1>
-                            <ul class="orders__products">
-                                <li class="orders__products-item">Mũi 1: ASTRA Ngày . . . </li>
-                                <li class="orders__products-item">Mũi 2: VERO CELL Ngày . . . </li>
-                            </ul>
-                        </li>
-                        <li class="orders__item">
-                            <h1>Đăng ký thông tin dương tính với covid.</h1>
-                            <ul class="orders__products">
-                                <li class="orders__products-item">Ngày đăng ký</li>
-                                <li class="orders__products-item">Giờ đăng ký</li>
-                            </ul>
-                        </li>
-                </ul>
-        </main>
-        <%- include('../includes/end.ejs') %>
+            <main>
+                <form action="/post-covid" method="post">
+                <div class="grid">
+                        <div class="card product-item">
+                            <h2>Thông tin thân nhiệt</h2>
+                            <div class="card__header">
+                                <label class="">Nhiệt độ</label>
+                                <input type="number" name="nhietdo" step="0.01"/>
+                            </div>
+                            <div class="card__header">
+                                <label class="card__header">Giờ đo</label>
+                                <input type="time" name="giodonhietdo"/>
+                            </div>
+                            <div class="card__header">
+                                <label class="card__header">Ngày đo</label>
+                                <input type="date" name="ngaydonhietdo"/>
+                            </div>
+                        </div>
+                        <div class="card product-item">
+                            <h2>Thông tin Vacxin</h2>
+                            <div class="card__header">
+                                <label class="">Loại Vacxin (Mũi 1)</label>
+                                <input type="text" name="mui1"/>
+                            </div>
+                            <div class="card__header">
+                                <label class="card__header">Ngày tiêm</label>
+                                <input type="date" name="ngaytiem1"/>
+                            </div>
+                            <div class="card__header">
+                                <label class="card__header">Loại Vacxin (Mũi 2)</label>
+                                <input type="text" name="mui2"/>
+                            </div>
+                            <div class="card__header">
+                                <label class="card__header">Ngày tiêm</label>
+                                <input type="date" name="ngaytiem2"/>
+                            </div>
+                        </div>
+                        <div class="card product-item">
+                            <h2>Thông tin dương tính</h2>
+                            <div class="card__header">
+                                <label class="">Ngày phát hiện dương tính</label>
+                                <input type="date" name="duongtinh"/>
+                            </div>
+                            <div class="card__header">
+                                <label class="card__header">Ngày khỏi</label>
+                                <input type="date" name="amtinh"/>
+                            </div>
+                        </div>
+                </div>
+                <div class="card__actions">
+                    <h1><button type="submit" class="btn">Xác nhận</button></h1>
+                </div>
+            </form>
+                
+            </main>
+            <%- include('../includes/end.ejs') %>

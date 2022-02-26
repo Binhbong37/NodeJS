@@ -5,28 +5,15 @@
 <body>
     <%- include('../includes/navigation.ejs') %>
     <main>
-        <div class="grid">
-            <div class="card__actions">
-                <h1><a href="/xac-nhan-lam-viec/?active=true" class="btn">ĐIỂM DANH</a></h1> 
-            </div>
-            <div class="card__actions">
-                <h1><a href="/xac-nhan-ket-thuc-lam/?active=false" class="btn">KẾT THÚC</a></h1> 
-            </div>
-            <div class="card__actions">
-                <h1><a href="/xin-nghi-phep" class="btn">NGHỈ PHÉP</a></h1>
-            </div>
-        </div>
-        <% for (let prod of result) { %>
-            <% if(prod.status) { %>
-                <div class="grid">
-                    <div class="card__actions">
-                        <h2>Thời gian bắt đầu: <%= prod.startTime %></h2>
-                        <h2>Nơi làm việc: <%= prod.place == 1 ? 'Công ty' : prod.place == 2 ? 'Ở Nhà' : 'Làm việc ngoài' %></h2>
-                        <h2>Trạng thái: Đang làm việc </h2>
-                    </div>
-                </div>
-            <% } %>
-        <% } %>
+        <%- include('../includes/button.ejs') %>
+        <div class="centered">
+            <% if (false) { %>
+                <h2 class="index__title">Kết thúc để có gạo</h3>
+                    <p>Mỗi ngày hãy cố gắng thêm một chút !!!</p>
+                    <% }else{%>
+                        <h2 class="index__title">Điểm danh để làm việc</h3>
+                            <i>Vì một tương lai ấm no !!!!</i>
+                            <% } %>
     </main>
     
 <%- include('../includes/end.ejs') %>
