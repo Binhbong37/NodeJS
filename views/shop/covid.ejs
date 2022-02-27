@@ -1,5 +1,5 @@
 <%- include('../includes/head.ejs') %>
-    <link rel="stylesheet" href="/css/product.css">
+    <link rel="stylesheet" href="/css/covid.css">
     </head>
 
     <body>
@@ -7,48 +7,48 @@
             <main>
                 <form action="/post-covid" method="post">
                 <div class="grid">
-                        <div class="card product-item">
+                        <div class="card covid">
                             <h2>Thông tin thân nhiệt</h2>
-                            <div class="card__header">
+                            <div class="covid_input">
                                 <label class="">Nhiệt độ</label>
                                 <input type="number" name="nhietdo" step="0.01"/>
                             </div>
-                            <div class="card__header">
-                                <label class="card__header">Giờ đo</label>
+                            <div class="covid_input">
+                                <label class="">Giờ đo</label>
                                 <input type="time" name="giodonhietdo"/>
                             </div>
-                            <div class="card__header">
-                                <label class="card__header">Ngày đo</label>
+                            <div class="covid_input">
+                                <label class="">Ngày đo</label>
                                 <input type="date" name="ngaydonhietdo"/>
                             </div>
                         </div>
-                        <div class="card product-item">
+                        <div class="card covid">
                             <h2>Thông tin Vacxin</h2>
-                            <div class="card__header">
+                            <div class="covid_input">
                                 <label class="">Loại Vacxin (Mũi 1)</label>
                                 <input type="text" name="mui1"/>
                             </div>
-                            <div class="card__header">
-                                <label class="card__header">Ngày tiêm</label>
+                            <div class="covid_input">
+                                <label class="">Ngày tiêm</label>
                                 <input type="date" name="ngaytiem1"/>
                             </div>
-                            <div class="card__header">
-                                <label class="card__header">Loại Vacxin (Mũi 2)</label>
+                            <div class="covid_input">
+                                <label class="">Loại Vacxin (Mũi 2)</label>
                                 <input type="text" name="mui2"/>
                             </div>
-                            <div class="card__header">
-                                <label class="card__header">Ngày tiêm</label>
+                            <div class="covid_input">
+                                <label class="">Ngày tiêm</label>
                                 <input type="date" name="ngaytiem2"/>
                             </div>
                         </div>
-                        <div class="card product-item">
+                        <div class="card covid">
                             <h2>Thông tin dương tính</h2>
-                            <div class="card__header">
-                                <label class="">Ngày phát hiện dương tính</label>
+                            <div class="covid_input">
+                                <label class="">Ngày dương tính</label>
                                 <input type="date" name="duongtinh"/>
                             </div>
-                            <div class="card__header">
-                                <label class="card__header">Ngày khỏi</label>
+                            <div class="covid_input">
+                                <label class="">Ngày khỏi</label>
                                 <input type="date" name="amtinh"/>
                             </div>
                         </div>

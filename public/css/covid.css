@@ -1,0 +1,28 @@
+.product-form {
+    width: 20rem;
+    max-width: 90%;
+    margin: auto;
+    display: block;
+}
+
+.covid h2 {
+    width: 25rem;
+    max-width: 95%;
+    margin: 1rem;
+    text-align: center;
+}
+
+.covid_input {
+    display: flex;
+    padding: 1rem;
+}
+.covid_input input {
+    flex: 1;
+}
+.covid_input label {
+    min-width: 150px;
+}
+
+
+
+
