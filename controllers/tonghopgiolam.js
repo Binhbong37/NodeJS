@@ -1,8 +1,9 @@
 const TimeTable = require('../models/timeTable');
+const onLeave = require('../models/onLeave');
 const moment = require('moment');
 
 exports.getTongHopGioLam = (req, res, next) => {
-    TimeTable.find().then((result) => {
+    TimeTable.find({ status: false }).then((result) => {
         result = result.map((inf) => {
             const overTime = (inf.updatedAt - inf.createdAt) / 36e5;
             let timeOver = 0;
@@ -27,5 +28,13 @@ exports.getTongHopGioLam = (req, res, next) => {
             pageTitle: 'Tra cứu thông tin giờ làm',
             inf: result,
         });
+    });
+};
+
+exports.getOnleave = (req, res) => {
+    res.render('shop/tonghopgiolam', {
+        path: '/thong-tin-gio-lam',
+        pageTitle: 'Tra cứu thông tin giờ làm',
+        inff: 'KET QUA',
     });
 };
