@@ -9,59 +9,27 @@
     <main>
         <form class="product-form" action="/xin-nghi-phep" method="POST">
             <div class="form-control">
-                <label for="title">Từ ngày</label>
-                <input type="text" name="startDaysOff" id="title">
-            </div>
-            <div class="form-control">
-                <label for="title">Đến ngày</label>
-                <input type="date" name="endDaysOff" id="title">
+                <label for="title">Ngày nghỉ</label>
+                <input type="date" name="dayOff" id="title">
             </div>
             <div class="form-control">
                 <label for="imageUrl">Số giờ nghỉ</label>
-                <input type="number" name="hourOff" id="imageUrl" step="0.01">
+                <input type="number" name="hourOff" id="imageUrl" max="8" min="0">
             </div>
             <div class="form-control">
                 <label for="description">Lý Do</label>
                 <textarea name="reason" id="description" rows="5"></textarea>
             </div>
             <div class="form-control">
-                <label for="price">Số ngày nghỉ còn lại: 12</label>
-                <!-- <input type="number" name="price" id="price" step="0.01"> -->
+                <label for="price">Số ngày nghỉ còn lại</label>
+                <input type="number" name="price" value="<%= staff.annualLeave %>" disabled>
             </div>
          
 
             <button class="btn" type="submit">Xác nhận</button>
         </form>
     </main>
-    <script
-    type="text/javascript"
-    src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"
-></script>
-<script
-    type="text/javascript"
-    src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"
-></script>
-<script
-    type="text/javascript"
-    src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"
-></script>
-<link
-    rel="stylesheet"
-    type="text/css"
-    href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"
-/>
-<script>
-    $(function () {
-        $('input[name="startDaysOff"]').daterangepicker({
-            timePicker: true,
-            startDate: moment().startOf('hour'),
-            endDate: moment().startOf('hour').add(32, 'hour'),
-            locale: {
-                format: 'DD/M/YY A',
-            },
-        });
-    });
-</script>
+    
 </body>
 
 </html>

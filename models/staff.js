@@ -41,8 +41,8 @@ const staffSchema = new Schema({
     ],
     onLeave: [
         {
-            daysLeave: { type: String },
-            timesLeave: { type: Number },
+            dayOff: { type: String },
+            hourOff: { type: Number },
             reason: { type: String },
         },
     ],
@@ -66,6 +66,17 @@ staffSchema.methods.addCheckOut = function (checkOut) {
         lastWorkTime.endWork = checkOut.endWork;
         return this.save();
     } else {
+        return this.save();
+    }
+};
+
+staffSchema.methods.addOnLeave = function (newOnLeave) {
+    if (this.onLeave.length < 0) {
+        return this.save();
+    } else {
+        const updatedOnLeave = [...this.onLeave];
+        updatedOnLeave.push(newOnLeave);
+        this.onLeave = updatedOnLeave;
         return this.save();
     }
 };

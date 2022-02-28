@@ -4,26 +4,23 @@ exports.getOnLeave = (req, res) => {
     res.render('shop/nghiphep', {
         path: '',
         pageTitle: 'Xin nghỉ phép',
+        staff: req.staff,
     });
 };
 
 exports.postOnLeave = (req, res) => {
-    const startDaysOff = req.body.startDaysOff;
-    const endDaysOff = req.body.endDaysOff;
+    const dayOff = req.body.dayOff;
     const reason = req.body.reason;
     const hourOff = req.body.hourOff;
-
-    const onLeave = new OnLeave({
-        startDaysOff,
-        endDaysOff,
+    const newOnLeave = {
+        dayOff,
         reason,
         hourOff,
-    });
-    onLeave
-        .save()
+    };
+    req.staff
+        .addOnLeave(newOnLeave)
         .then(() => {
-            console.log('Tao ngay nghi');
-            res.redirect('/');
+            res.redirect('/thong-tin-ca-nhan');
         })
-        .catch((err) => console.log('TAO NGAY NGHI THAT BAI'));
+        .catch((err) => console.log(err));
 };

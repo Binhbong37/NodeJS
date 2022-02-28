@@ -26,7 +26,20 @@
             </table>
             <table>
                 <h2>Xin nghỉ phép</h2>
-                <p></p>
+                <tr>
+                  <th>Ngày nghỉ</th>
+                  <th>Số giờ nghỉ</th>
+                  <th>Lý do</th>
+                </tr>
+                
+                <% for (let prod of user.onLeave) { %>
+                <tr>
+                  <td><%= prod.dayOff %></td>
+                  <td><%= prod.hourOff %> giờ</td>
+                  <td><%= prod.reason %></td>
+                </tr>
+                
+                <% } %>
             </table>
         </main>
         <%- include('../includes/end.ejs') %>
