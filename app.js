@@ -16,13 +16,13 @@ const Staff = require('./models/staff');
 const shopRoutes = require('./routes/shop');
 // const onLeaveRoutes = require('./routes/onLeave');
 // const gioLamRoutes = require('./routes/tonghopgiolam');
-// const covidRoutes = require('./routes/covid');
+const covidRoutes = require('./routes/covid');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
-    Staff.findById('621b84f87f1101420c755d45')
+    Staff.findById('621c7a33b529b83984f39609')
         .then((user) => {
             req.staff = user;
             next();
@@ -33,7 +33,7 @@ app.use((req, res, next) => {
 app.use(shopRoutes);
 // app.use(onLeaveRoutes);
 // app.use(gioLamRoutes);
-// app.use(covidRoutes);
+app.use(covidRoutes);
 
 app.use(errorController.get404);
 
@@ -56,8 +56,8 @@ mongoose
                     annualLeave: 12,
                     imageUrl:
                         'https://scontent-sin6-4.xx.fbcdn.net/v/t1.6435-9/118581074_364340657905109_6856843790228428460_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=aqjb3DlZp_IAX9d71mN&tn=FZVDBoNex-r8p6Mb&_nc_ht=scontent-sin6-4.xx&oh=00_AT8257eV1XFdR1rL-H7bcFJs-Np6123TQ2cRuSTqefP5tg&oe=61F8CBB4',
-                    workTime: [{}],
-                    onLeave: [{}],
+                    workTimes: [],
+                    onLeave: [],
                 });
                 newUser.save();
             }

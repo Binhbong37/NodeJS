@@ -8,23 +8,25 @@
 
     <main>
         <% if(status.length > 0) { %>
-            <% for (let prod of status) { %>
+            
         <form class="product-form" action="/check-out" method="POST">
             <div class="form-control">
                 <label for="name"><h2>Họ và tên: Nguyen Van A</h2></label>
-            </div> 
+            </div>
+            <% for (let prod of status) { %>
             <div class="form-control">
                 <label for="place"><h2>Nơi làm việc: <%= prod.place == 1 ? 'Công ty' : prod.place == 2 ? 'Ở Nhà' : 'Làm việc ngoài' %></h2></label>
             </div> 
+            <% } %>
             <div class="form-control" style="font-size: 20px;">
-                Thời gian kết thúc: <%= prod.dateNow %>
+                Thời gian kết thúc: <%= dateNow %>
             </div> 
            
             <button class="btn" type="submit">
                 Xác nhận
             </button>
         </form>
-            <% } %>
+            
         <% } else { %>
             <h1> CÓ LÀM THÌ MỚI CÓ ĂN !!!!</h1>
             <h3> Xin mời quay lại ĐIỂM DANH !!!!</h3>

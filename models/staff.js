@@ -31,45 +31,39 @@ const staffSchema = new Schema({
         type: String,
         required: true,
     },
-    workTime: [
+    workTimes: [
         {
-            place: { type: String },
+            place: { type: String, required: true },
             status: { type: Boolean, default: true },
             startWork: { type: Date, default: new Date() },
-            endWordk: { type: Date },
+            endWork: { type: Date },
         },
     ],
     onLeave: [
         {
-            startDaysOff: { type: Date },
+            daysLeave: { type: String },
+            timesLeave: { type: Number },
             reason: { type: String },
-            hourOff: { type: Number },
         },
     ],
 });
 
 staffSchema.methods.addCheckIn = function (NewWorkTime) {
-    if (this.workTime.length < 0) {
+    if (this.workTimes.length < 0) {
         return this.save();
     } else {
-        const updateworkTimes = [...this.workTime];
+        const updateworkTimes = [...this.workTimes];
         updateworkTimes.push(NewWorkTime);
-        this.workTime = updateworkTimes;
+        this.workTimes = updateworkTimes;
         return this.save();
     }
 };
 
 staffSchema.methods.addCheckOut = function (checkOut) {
-    // console.log('Model: ', checkOut);
-    // const abc = this.workTime[this.workTime.length - 1].endWordk;
-    // console.log(abc);
-    if (this.workTime[this.workTime.length - 1].endWordk === undefined) {
-        const lastWorkTime = this.workTime[this.workTime.length - 1];
-        const updateWorkTime = (lastWorkTime.endWordk = checkOut.endWordk);
+    if (this.workTimes[this.workTimes.length - 1].endWork === null) {
+        const lastWorkTime = this.workTimes[this.workTimes.length - 1];
         lastWorkTime.status = checkOut.status;
-        lastWorkTime.endWordk = updateWorkTime;
-
-        this.workTime = [lastWorkTime];
+        lastWorkTime.endWork = checkOut.endWork;
         return this.save();
     } else {
         return this.save();

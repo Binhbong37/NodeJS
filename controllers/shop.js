@@ -3,39 +3,25 @@ const Staff = require('../models/staff');
 const moment = require('moment');
 
 exports.getIndex = (req, res, next) => {
-    Staff.findOne()
-        .then((result) => {
-            console.log(result.workTime);
-            let resultStaff = [];
-            if (result.length > 0) {
-                resultStaff = result[0].workTime;
-            }
+    const result = req.staff.workTimes.filter((re) => {
+        return re.status === true;
+    });
+    let newData = [];
+    if (result.length > 0) {
+        newData = [
+            {
+                place: result[0].place,
+                startTime: moment(result[0].startWork).format('LT'),
+                status: result[0].status,
+            },
+        ];
+    }
 
-            resultStaff = resultStaff.filter((st) => {
-                return st.status === true;
-            });
-            return resultStaff;
-        })
-        .then((result1) => {
-            result1 = result1.map((abc) => {
-                return {
-                    startTime: moment(abc.startWork).format('LT'),
-                    place:
-                        abc.place === '1'
-                            ? 'Công ty'
-                            : abc.place === '2'
-                            ? 'Ở nhà'
-                            : 'KH',
-                    status: abc.status,
-                };
-            });
-            res.render('worktime/index', {
-                pageTitle: 'Điểm danh/kết thúc',
-                path: '/',
-                result: result1,
-            });
-        })
-        .catch((err) => console.log('K tim dc nguoi dung: ', err));
+    res.render('worktime/index', {
+        pageTitle: 'Điểm danh/kết thúc',
+        path: '/',
+        result: newData,
+    });
 };
 
 exports.getConfirmCheckIn = (req, res, next) => {
@@ -47,35 +33,18 @@ exports.getConfirmCheckIn = (req, res, next) => {
 };
 
 exports.getConfirmCheckOut = (req, res, next) => {
-    Staff.find()
-        .then((result) => {
-            let resultStaff = [result[0].workTime[0]];
-            resultStaff = resultStaff.filter((st) => {
-                return st.status === true;
-            });
-            return resultStaff;
-        })
-        .then((result) => {
-            console.log(result);
-            let getResult;
-            if (result.length <= 0) {
-                getResult = result;
-            } else {
-                getResult = [
-                    {
-                        place: result[0].place,
-                        dateNow: moment(new Date()).format('LT'),
-                    },
-                ];
-            }
-            console.log('den chua: ', getResult);
-            res.render('worktime/confirmCheckout', {
-                path: '/add-product',
-                pageTitle: 'Xác nhận kết thúc',
-                status: getResult,
-            });
-        })
-        .catch((err) => console.log('k tim dc checkIn: ', err));
+    const result = req.staff.workTimes.filter((re) => {
+        return re.status === true;
+    });
+    const timeNow = moment().format('LT');
+
+    console.log('den chua: ', result[0], timeNow);
+    res.render('worktime/confirmCheckout', {
+        path: '/add-product',
+        pageTitle: 'Xác nhận kết thúc',
+        status: result,
+        dateNow: timeNow,
+    });
 };
 
 exports.postCheckIn = (req, res, next) => {
@@ -84,8 +53,8 @@ exports.postCheckIn = (req, res, next) => {
         place,
         status: true,
         startWork: new Date(),
+        endWork: null,
     };
-    console.log(place);
     req.staff
         .addCheckIn(newStart)
         .then((result) => {
@@ -95,28 +64,28 @@ exports.postCheckIn = (req, res, next) => {
 };
 
 exports.getCheckout = (req, res) => {
-    TimeTable.find()
+    Staff.find()
         .then((result) => {
-            result = result.filter((res) => {
+            result = result[0].workTimes.filter((re) => {
                 const today = moment(new Date()).format('MMM Do YY');
-                const checkToday = moment(res.createdAt).format('MMM Do YY');
-                return today === checkToday;
+                const checkToday = moment(re.startWork).format('MMM Do YY');
+                return today === checkToday && re.status === false;
             });
             return result;
         })
         .then((result) => {
             let totalTime = 0;
             result = result.map((abc) => {
-                const bc = new Date(abc.updatedAt);
-                const ab = new Date(abc.createdAt);
+                const bc = new Date(abc.endWork);
+                const ab = new Date(abc.startWork);
                 const sumTime = Math.abs(bc - ab) / 36e5;
                 const time = (Math.round(sumTime * 100) / 100).toFixed(2);
                 const timeTotal = parseFloat(time);
                 totalTime += timeTotal;
                 return {
-                    workDay: moment(abc.createdAt).format('LL'),
-                    startTime: moment(abc.createdAt).format('LT'),
-                    endTime: moment(abc.updatedAt).format('LT'),
+                    workDay: moment(abc.startWork).format('LL'),
+                    startTime: moment(abc.startWork).format('LT'),
+                    endTime: moment(abc.endWork).format('LT'),
                     place:
                         abc.place == 1
                             ? 'Công ty'
@@ -126,6 +95,7 @@ exports.getCheckout = (req, res) => {
                     total: time,
                 };
             });
+            console.log('getCheckout1: ', result);
             res.render('worktime/ketthuclam', {
                 path: '',
                 pageTitle: 'Thông tin giờ làm hôm nay',
@@ -133,19 +103,19 @@ exports.getCheckout = (req, res) => {
                 totalTime: Math.round(totalTime * 100) / 100,
             });
         })
-        .catch((err) => console.log('NOT GET CHECK OUT !!!'));
+        .catch((err) => console.log(err));
 };
 
 exports.postCheckOut = (req, res) => {
     const newEndWork = {
         status: false,
-        endWordk: new Date(),
+        endWork: new Date(),
     };
     req.staff
         .addCheckOut(newEndWork)
         .then((re) => {
             console.log('Post CHECKOUT !');
-            // res.redirect('/check-out');
+            res.redirect('/');
         })
         .catch((err) => console.log(err));
 };
@@ -181,7 +151,6 @@ exports.getEditStaff = (req, res) => {
             department: user[0].department,
             annualLeave: user[0].annualLeave,
             imageUrl: user[0].imageUrl,
-            _id: req.staff._id,
         };
         res.render('shop/editInfo', {
             path: '',
@@ -193,7 +162,7 @@ exports.getEditStaff = (req, res) => {
 
 exports.postEditStaff = (req, res) => {
     const imageUrl = req.body.imageUrl;
-    const id = req.user._id;
+    const id = req.staff._id;
     Staff.findById(id)
         .then((staff) => {
             staff.imageUrl = imageUrl;

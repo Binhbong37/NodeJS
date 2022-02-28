@@ -2,7 +2,10 @@
     <div class="card product-item">
         <div class="card__header">
             <h2>Giờ bắt đầu: <%= result[0].startTime %></h2>
-            <h2>Địa điểm: <%= result[0].place %></h2>
+            <h2>
+                Địa điểm: <%= result[0].place === '1' ? 'Công ty' :
+                result[0].place === '2' ? 'Ở nhà' : 'KH' %>
+            </h2>
             <i>Bạn đang trong thời gian làm việc !!!</i>
         </div>
     </div>
