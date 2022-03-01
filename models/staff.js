@@ -41,9 +41,9 @@ const staffSchema = new Schema({
     ],
     onLeave: [
         {
-            dayOff: { type: String },
-            hourOff: { type: Number },
-            reason: { type: String },
+            dayOff: { type: String, required: true },
+            hourOff: { type: Number, required: true },
+            reason: { type: String, required: true },
         },
     ],
 });
@@ -71,7 +71,24 @@ staffSchema.methods.addCheckOut = function (checkOut) {
 };
 
 staffSchema.methods.addOnLeave = function (newOnLeave) {
-    if (this.onLeave.length < 0) {
+    // update annualLeave
+    let time = 0;
+    this.onLeave.forEach((tim) => {
+        return (time += tim.hourOff);
+    });
+    let addTime = time + +newOnLeave.hourOff;
+    console.log('MODEL :', addTime);
+    let timeChange = 0;
+    if (this.annualLeave < addTime / 8) {
+        timeChange = addTime / 8 - this.annualLeave;
+        this.annualLeave = this.annualLeave;
+    } else {
+        this.annualLeave = this.annualLeave - addTime / 8;
+    }
+    console.log('annualLeave: ', this.annualLeave);
+
+    // add onLeave
+    if (this.onLeave.length < 0 || timeChange > 0) {
         return this.save();
     } else {
         const updatedOnLeave = [...this.onLeave];

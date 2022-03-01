@@ -12,6 +12,9 @@ exports.postOnLeave = (req, res) => {
     const dayOff = req.body.dayOff;
     const reason = req.body.reason;
     const hourOff = req.body.hourOff;
+    if (!dayOff || !reason || !hourOff) {
+        return res.redirect('/xin-nghi-phep');
+    }
     const newOnLeave = {
         dayOff,
         reason,

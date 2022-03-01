@@ -13,7 +13,7 @@
                 <input type="date" name="dayOff" id="title">
             </div>
             <div class="form-control">
-                <label for="imageUrl">Số giờ nghỉ</label>
+                <label for="imageUrl">Số giờ nghỉ (tối đa là 8h)</label>
                 <input type="number" name="hourOff" id="imageUrl" max="8" min="0">
             </div>
             <div class="form-control">
@@ -21,7 +21,7 @@
                 <textarea name="reason" id="description" rows="5"></textarea>
             </div>
             <div class="form-control">
-                <label for="price">Số ngày nghỉ còn lại</label>
+                <label for="price">Số ngày nghỉ còn lại ( ngày )</label>
                 <input type="number" name="price" value="<%= staff.annualLeave %>" disabled>
             </div>
          

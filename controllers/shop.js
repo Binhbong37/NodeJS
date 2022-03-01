@@ -94,7 +94,7 @@ exports.getCheckout = (req, res) => {
                     total: time,
                 };
             });
-            console.log('getCheckout1: ', result);
+
             res.render('worktime/ketthuclam', {
                 path: '',
                 pageTitle: 'Thông tin giờ làm hôm nay',
@@ -114,7 +114,7 @@ exports.postCheckOut = (req, res) => {
         .addCheckOut(newEndWork)
         .then((re) => {
             console.log('Post CHECKOUT !');
-            res.redirect('/');
+            res.redirect('/check-out');
         })
         .catch((err) => console.log(err));
 };
