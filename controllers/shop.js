@@ -1,5 +1,6 @@
 const Staff = require('../models/staff');
 const moment = require('moment');
+const Methods = require('../util/salary');
 
 exports.getIndex = (req, res, next) => {
     const result = req.staff.workTimes.filter((re) => {
@@ -63,6 +64,8 @@ exports.postCheckIn = (req, res, next) => {
 };
 
 exports.getCheckout = (req, res) => {
+    const dayOff = Methods.getdayLeave(req.staff);
+    console.log(dayOff);
     Staff.find()
         .then((result) => {
             result = result[0].workTimes.filter((re) => {
@@ -75,6 +78,7 @@ exports.getCheckout = (req, res) => {
         .then((result) => {
             let totalTime = 0;
             result = result.map((abc) => {
+                today = new Date(abc.startWork).getDate();
                 const bc = new Date(abc.endWork);
                 const ab = new Date(abc.startWork);
                 const sumTime = Math.abs(bc - ab) / 36e5;
@@ -99,7 +103,7 @@ exports.getCheckout = (req, res) => {
                 path: '',
                 pageTitle: 'Thông tin giờ làm hôm nay',
                 result: result,
-                totalTime: Math.round(totalTime * 100) / 100,
+                totalTime: dayOff + Math.round(totalTime * 100) / 100,
             });
         })
         .catch((err) => console.log(err));

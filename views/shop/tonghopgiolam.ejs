@@ -6,7 +6,9 @@
         <%- include('../includes/navigation.ejs') %>
         <main>
             <table>
-                    <h2>Danh sách giờ làm</h2>
+              <a href="/check-out" class="btn">Chi tiết làm hôm nay</a>
+                    <h2>Danh sách giờ làm</h2> 
+                    <hr />
                     <tr>
                       <th>Ngày</th>
                       <th>Giờ vào</th>
@@ -59,7 +61,7 @@
                       <option value="11">11</option>
                       <option value="12">12</option>
                   </select>
-                  <button type="submit">Tìm kiếm</button>
+                  <button type="submit">Đến</button>
               </form>
               <p class="referenceStaff__salary">
                   Số tiền ở đây: <%= salary %>

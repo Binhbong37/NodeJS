@@ -25,7 +25,7 @@ class Methods {
             return listDayLeave.push(daysLeave);
         });
 
-        // get over time and short time;
+        // get overTime and shortTime;
         for (let i = 1; i <= lastDayOfMonth; i++) {
             let timeWorkInDay = 0;
             let timeAnnualLeave = 0;
@@ -62,6 +62,22 @@ class Methods {
         }
         console.log('Check: ', overTime, shortTime);
         return staff.salaryScale * 3000000 + (overTime - shortTime) * 200000;
+    };
+
+    getdayLeave = (staff) => {
+        let dayLeave;
+        let hourOff = 0;
+        staff.onLeave.forEach((day) => {
+            let dayOff = day.dayOff;
+            dayLeave = new Date(dayOff).getDate();
+            let today = new Date().getDate();
+            if (dayLeave == today) {
+                hourOff = day.hourOff;
+            } else {
+                hourOff = 0;
+            }
+        });
+        return hourOff;
     };
 }
 
