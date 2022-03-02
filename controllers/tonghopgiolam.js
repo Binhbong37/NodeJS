@@ -1,7 +1,9 @@
 const Staff = require('../models/staff');
 const moment = require('moment');
+const Methods = require('../util/salary');
 
 exports.getTongHopGioLam = (req, res, next) => {
+    const salary = Methods.getSalary(req.body.month, req.staff);
     Staff.find()
         .then((result) => {
             const result1 = result[0].workTimes.filter((re) => {
@@ -34,6 +36,7 @@ exports.getTongHopGioLam = (req, res, next) => {
                 pageTitle: 'Tra cứu thông tin giờ làm',
                 inf: result,
                 user: req.staff,
+                salary: salary,
             });
         });
 };
