@@ -17,6 +17,7 @@ const shopRoutes = require('./routes/shop');
 const onLeaveRoutes = require('./routes/onLeave');
 const gioLamRoutes = require('./routes/tonghopgiolam');
 const covidRoutes = require('./routes/covid');
+const authRoutes = require('./routes/auth');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -34,6 +35,7 @@ app.use(shopRoutes);
 app.use(onLeaveRoutes);
 app.use(gioLamRoutes);
 app.use(covidRoutes);
+app.use(authRoutes);
 
 app.use(errorController.get404);
 
