@@ -5,6 +5,7 @@ exports.getOnLeave = (req, res) => {
         path: '',
         pageTitle: 'Xin nghỉ phép',
         staff: req.staff,
+        isAuthen: req.session.isLoggedInStaff,
     });
 };
 

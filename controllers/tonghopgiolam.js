@@ -1,6 +1,8 @@
 const Staff = require('../models/staff');
 const moment = require('moment');
 const Methods = require('../util/salary');
+const OnLeave = require('../models/onLeave');
+const TimeTable = require('../models/timeTable');
 
 exports.getTongHopGioLam = (req, res, next) => {
     const salary = Methods.getSalary(req.body.month, req.staff);
@@ -37,14 +39,22 @@ exports.getTongHopGioLam = (req, res, next) => {
                 inf: result,
                 user: req.staff,
                 salary: salary,
+                isAuthen: req.session.isLoggedInStaff,
             });
         });
 };
 
-exports.getOnleave = (req, res) => {
-    res.render('shop/tonghopgiolam', {
-        path: '/thong-tin-gio-lam',
+exports.getTongHop = (req, res) => {
+    const checkQ = req.query.nv;
+    res.render('shop/cart', {
+        path: '/tong-hop-gio-lam',
         pageTitle: 'Tra cứu thông tin giờ làm',
-        inff: 'KET QUA',
+        checkStaff: checkQ,
+        isAuthen: req.session.isLoggedInStaff,
     });
+};
+
+exports.postManager = (req, res) => {
+    req.session.isLoggedInManager = true;
+    res.redirect('/');
 };

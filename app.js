@@ -1,10 +1,16 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
+const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
+const mongoose = require('mongoose');
 
 const app = express();
-
-const mongoose = require('mongoose');
+const MONGODB_URI = 'mongodb://localhost:27017/funix_njs_asm';
+const store = new MongoDBStore({
+    uri: MONGODB_URI,
+    collection: 'sessions',
+});
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
@@ -21,6 +27,14 @@ const authRoutes = require('./routes/auth');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(
+    session({
+        secret: 'my secret',
+        resave: false,
+        saveUninitialized: false,
+        store: store,
+    })
+);
 
 app.use((req, res, next) => {
     Staff.findById('621d8b049463382dd4afc36c')
@@ -38,8 +52,6 @@ app.use(covidRoutes);
 app.use(authRoutes);
 
 app.use(errorController.get404);
-
-const MONGODB_URI = 'mongodb://localhost:27017/funix_njs_asm';
 
 mongoose
     .connect(MONGODB_URI, {

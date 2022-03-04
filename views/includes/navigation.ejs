@@ -5,14 +5,14 @@
         <ul class="main-header__item-list">
             <li class="main-header__item">
                 <a class="<%= path === '/' ? 'active' : '' %>" href="/"
-                    >Điểm danh/kết thúc</a
+                    >Chấm công</a
                 >
             </li>
             <li class="main-header__item">
                 <a
                     class="<%= path === '/thong-tin-ca-nhan' ? 'active' : '' %>"
                     href="/thong-tin-ca-nhan"
-                    >Xem/Sửa thông tin cá nhân</a
+                    >Thông tin cá nhân</a
                 >
             </li>
             <li class="main-header__item">
@@ -29,8 +29,16 @@
                     >Thông tin COVID</a
                 >
             </li>
+            <li class="main-header__item">
+                <a
+                    class="<%= path === '/tong-hop-gio-lam' ? 'active' : '' %>"
+                    href="/tong-hop-gio-lam"
+                    >Tổng hợp giờ làm NV</a
+                >
+            </li>
         </ul>
         <ul class="main-header__item-list">
+            <% if (!isAuthen) { %>
             <li class="main-header__item">
                 <a
                     class="<%= path === '/login' ? 'active' : '' %>"
@@ -38,6 +46,13 @@
                     >Login</a
                 >
             </li>
+            <% } else { %>
+            <li class="main-header__item">
+                <form action="/logout" method="post">
+                    <button type="submit">Logout</button>
+                </form>
+            </li>
+            <% } %>
         </ul>
     </nav>
 </header>
@@ -46,29 +61,46 @@
     <ul class="mobile-nav__item-list">
         <li class="mobile-nav__item">
             <a class="<%= path === '/' ? 'active' : '' %>" href="/"
-                >Điểm danh/kết thúc</a
+                >Chấm công</a
             >
         </li>
         <li class="mobile-nav__item">
             <a
-                class="<%= path === '/products' ? 'active' : '' %>"
+                class="<%= path === '/thong-tin-ca-nhan' ? 'active' : '' %>"
                 href="/thong-tin-ca-nhan"
-                >Xem/Sửa thông tin cá nhân</a
+                >Thông tin cá nhân</a
             >
         </li>
         <li class="mobile-nav__item">
             <a
-                class="<%= path === '/cart' ? 'active' : '' %>"
+                class="<%= path === '/thong-tin-gio-lam' ? 'active' : '' %>"
                 href="/thong-tin-gio-lam"
                 >Tra cứu thông tin giờ làm</a
             >
         </li>
         <li class="mobile-nav__item">
             <a
-                class="<%= path === '/orders' ? 'active' : '' %>"
+                class="<%= path === '/thong-tin-covid' ? 'active' : '' %>"
                 href="/thong-tin-covid"
                 >Thông tin COVID</a
             >
+        </li>
+        <li class="mobile-nav__item">
+            <a
+                class="<%= path === '/tong-hop-gio-lam' ? 'active' : '' %>"
+                href="tong-hop-gio-lam"
+                >Tổng hợp giờ làm NV</a
+            >
+        </li>
+        <li class="mobile-nav__item">
+            <a class="<%= path === '/login' ? 'active' : '' %>" href="/login"
+                >Login</a
+            >
+        </li>
+        <li class="mobile-nav__item">
+            <form action="/logout" method="post">
+                <button type="submit">Logout</button>
+            </form>
         </li>
     </ul>
 </nav>

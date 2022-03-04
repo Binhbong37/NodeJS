@@ -4,6 +4,7 @@ exports.getCovid = (req, res, next) => {
     res.render('shop/covid', {
         path: '/thong-tin-covid',
         pageTitle: 'Thông tin Covid',
+        isAuthen: req.session.isLoggedInStaff,
     });
 };
 

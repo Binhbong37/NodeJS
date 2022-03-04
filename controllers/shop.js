@@ -21,6 +21,7 @@ exports.getIndex = (req, res, next) => {
         pageTitle: 'Điểm danh/kết thúc',
         path: '/',
         result: newData,
+        isAuthen: req.session.isLoggedInStaff,
     });
 };
 
@@ -29,6 +30,7 @@ exports.getConfirmCheckIn = (req, res, next) => {
         path: '/add-product',
         pageTitle: 'Xác nhận làm việc',
         active: true,
+        isAuthen: req.session.isLoggedInStaff,
     });
 };
 
@@ -44,6 +46,7 @@ exports.getConfirmCheckOut = (req, res, next) => {
         pageTitle: 'Xác nhận kết thúc',
         status: result,
         dateNow: timeNow,
+        isAuthen: req.session.isLoggedInStaff,
     });
 };
 
@@ -104,6 +107,7 @@ exports.getCheckout = (req, res) => {
                 pageTitle: 'Thông tin giờ làm hôm nay',
                 result: result,
                 totalTime: dayOff + Math.round(totalTime * 100) / 100,
+                isAuthen: req.session.isLoggedInStaff,
             });
         })
         .catch((err) => console.log(err));
@@ -139,6 +143,7 @@ exports.getInfStaff = (req, res, next) => {
                 path: '/thong-tin-ca-nhan',
                 pageTitle: 'Thông tin cá nhân',
                 staff: [staff],
+                isAuthen: req.session.isLoggedInStaff,
             });
         })
         .catch((err) => console.log('K lay dc Staff controller'));
@@ -159,6 +164,7 @@ exports.getEditStaff = (req, res) => {
             path: '',
             pageTitle: 'Chỉnh sửa thông tin',
             staff: [staff],
+            isAuthen: req.session.isLoggedInStaff,
         });
     });
 };
