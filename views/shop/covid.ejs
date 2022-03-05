@@ -57,6 +57,14 @@
                     <h1><button type="submit" class="btn">Xác nhận</button></h1>
                 </div>
             </form>
-                
+            <% if(isAuthen1) { %>
+                <div class="card__actions">
+                    <h2>Kết quả covid</h2>
+                    <% for( let inf of nhietDo) { %>
+                        <p>Nhiệt độ: <%= inf.nhiet_do %></p>
+                        <p>Ngày đo: <%= new Date(inf.ngay_do).getDate() %> - <%= new Date(inf.ngay_do).getMonth() + 1 %> </p>
+                    <% } %>
+                </div>
+                <% } %>
             </main>
             <%- include('../includes/end.ejs') %>

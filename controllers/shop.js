@@ -3,6 +3,7 @@ const moment = require('moment');
 const Methods = require('../util/salary');
 
 exports.getIndex = (req, res, next) => {
+    console.log(req.session);
     const result = req.staff.workTimes.filter((re) => {
         return re.status === true;
     });
@@ -22,6 +23,7 @@ exports.getIndex = (req, res, next) => {
         path: '/',
         result: newData,
         isAuthen: req.session.isLoggedInStaff,
+        isAuthen1: req.session.isLoggedInOnLeave,
     });
 };
 
@@ -31,6 +33,7 @@ exports.getConfirmCheckIn = (req, res, next) => {
         pageTitle: 'Xác nhận làm việc',
         active: true,
         isAuthen: req.session.isLoggedInStaff,
+        isAuthen1: req.session.isLoggedInOnLeave,
     });
 };
 
@@ -47,6 +50,7 @@ exports.getConfirmCheckOut = (req, res, next) => {
         status: result,
         dateNow: timeNow,
         isAuthen: req.session.isLoggedInStaff,
+        isAuthen1: req.session.isLoggedInOnLeave,
     });
 };
 
@@ -108,6 +112,7 @@ exports.getCheckout = (req, res) => {
                 result: result,
                 totalTime: dayOff + Math.round(totalTime * 100) / 100,
                 isAuthen: req.session.isLoggedInStaff,
+                isAuthen1: req.session.isLoggedInOnLeave,
             });
         })
         .catch((err) => console.log(err));
@@ -144,6 +149,7 @@ exports.getInfStaff = (req, res, next) => {
                 pageTitle: 'Thông tin cá nhân',
                 staff: [staff],
                 isAuthen: req.session.isLoggedInStaff,
+                isAuthen1: req.session.isLoggedInOnLeave,
             });
         })
         .catch((err) => console.log('K lay dc Staff controller'));
@@ -165,6 +171,7 @@ exports.getEditStaff = (req, res) => {
             pageTitle: 'Chỉnh sửa thông tin',
             staff: [staff],
             isAuthen: req.session.isLoggedInStaff,
+            isAuthen1: req.session.isLoggedInOnLeave,
         });
     });
 };

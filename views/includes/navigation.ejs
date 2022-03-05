@@ -29,6 +29,7 @@
                     >Thông tin COVID</a
                 >
             </li>
+            <% if (isAuthen1) { %>
             <li class="main-header__item">
                 <a
                     class="<%= path === '/tong-hop-gio-lam' ? 'active' : '' %>"
@@ -36,9 +37,10 @@
                     >Tổng hợp giờ làm NV</a
                 >
             </li>
+            <% } %>
         </ul>
         <ul class="main-header__item-list">
-            <% if (!isAuthen) { %>
+            <% if (!isAuthen && !isAuthen1) { %>
             <li class="main-header__item">
                 <a
                     class="<%= path === '/login' ? 'active' : '' %>"

@@ -40,6 +40,7 @@ exports.getTongHopGioLam = (req, res, next) => {
                 user: req.staff,
                 salary: salary,
                 isAuthen: req.session.isLoggedInStaff,
+                isAuthen1: req.session.isLoggedInOnLeave,
             });
         });
 };
@@ -51,10 +52,10 @@ exports.getTongHop = (req, res) => {
         pageTitle: 'Tra cứu thông tin giờ làm',
         checkStaff: checkQ,
         isAuthen: req.session.isLoggedInStaff,
+        isAuthen1: req.session.isLoggedInOnLeave,
     });
 };
 
 exports.postManager = (req, res) => {
-    req.session.isLoggedInManager = true;
     res.redirect('/');
 };
