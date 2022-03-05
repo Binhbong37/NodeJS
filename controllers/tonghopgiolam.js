@@ -1,8 +1,6 @@
 const Staff = require('../models/staff');
 const moment = require('moment');
 const Methods = require('../util/salary');
-const OnLeave = require('../models/onLeave');
-const TimeTable = require('../models/timeTable');
 
 exports.getTongHopGioLam = (req, res, next) => {
     const salary = Methods.getSalary(req.body.month, req.staff);
@@ -40,7 +38,7 @@ exports.getTongHopGioLam = (req, res, next) => {
                 user: req.staff,
                 salary: salary,
                 isAuthen: req.session.isLoggedInStaff,
-                isAuthen1: req.session.isLoggedInOnLeave,
+                isAuthen1: req.session.isLoggedInManager,
             });
         });
 };
@@ -52,7 +50,7 @@ exports.getTongHop = (req, res) => {
         pageTitle: 'Tra cứu thông tin giờ làm',
         checkStaff: checkQ,
         isAuthen: req.session.isLoggedInStaff,
-        isAuthen1: req.session.isLoggedInOnLeave,
+        isAuthen1: req.session.isLoggedInManager,
     });
 };
 

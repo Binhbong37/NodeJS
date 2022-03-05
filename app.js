@@ -18,6 +18,7 @@ app.set('views', 'views');
 const errorController = require('./controllers/error');
 
 const Staff = require('./models/staff');
+const Manager = require('./models/manager');
 
 const shopRoutes = require('./routes/shop');
 const onLeaveRoutes = require('./routes/onLeave');
@@ -37,12 +38,23 @@ app.use(
 );
 
 app.use((req, res, next) => {
-    Staff.findById('621d8b049463382dd4afc36c')
-        .then((user) => {
-            req.staff = user;
-            next();
-        })
-        .catch((err) => console.log('k tim dc id nguoi dung'));
+    if (!req.session.staff && !req.session.manager) {
+        return next();
+    } else if (req.session.staff) {
+        Staff.findById(req.session.staff._id)
+            .then((user) => {
+                req.staff = user;
+                next();
+            })
+            .catch((err) => console.log('k tim dc id nguoi dung'));
+    } else {
+        Manager.findById(req.session.manager)
+            .then((manager) => {
+                req.staff = manager;
+                next();
+            })
+            .catch((err) => console.log(err));
+    }
 });
 
 app.use(shopRoutes);
@@ -62,16 +74,22 @@ mongoose
         Staff.findOne().then((user) => {
             if (!user) {
                 const newUser = new Staff({
-                    name: 'Nguyễn văn A',
-                    doB: '2001-10-21',
+                    name: 'Hoang Van Binh',
+                    doB: '1996-06-17',
                     salaryScale: 3,
-                    startDate: '2022-01-20',
+                    startDate: '2022-02-20',
                     department: 'IT',
                     annualLeave: 12,
                     imageUrl:
-                        'https://scontent-sin6-4.xx.fbcdn.net/v/t1.6435-9/118581074_364340657905109_6856843790228428460_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=aqjb3DlZp_IAX9d71mN&tn=FZVDBoNex-r8p6Mb&_nc_ht=scontent-sin6-4.xx&oh=00_AT8257eV1XFdR1rL-H7bcFJs-Np6123TQ2cRuSTqefP5tg&oe=61F8CBB4',
+                        'https://st.quantrimang.com/photos/image/2021/08/27/hinh-anh-cam-on-4.jpg',
                     workTimes: [],
                     onLeave: [],
+                    covidInfo: {
+                        thong_tin_than_nhiet: [],
+                        thong_tin_vacxin: [],
+                        thong_tin_mac_covid: [],
+                    },
+                    managerId: '622329d619a7ff40e036bfd7',
                 });
                 newUser.save();
             }

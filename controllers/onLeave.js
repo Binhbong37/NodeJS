@@ -6,7 +6,7 @@ exports.getOnLeave = (req, res) => {
         pageTitle: 'Xin nghỉ phép',
         staff: req.staff,
         isAuthen: req.session.isLoggedInStaff,
-        isAuthen1: req.session.isLoggedInOnLeave,
+        isAuthen1: req.session.isLoggedInManager,
     });
 };
 

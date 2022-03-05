@@ -2,17 +2,15 @@ const Covid = require('../models/covid');
 
 exports.getCovid = (req, res, next) => {
     Covid.find()
-        // // .populate()
-        // .execPopulate()
+        .populate()
         .then((result) => {
-            console.log(result);
             let nhietDo = result[0].thong_tin_than_nhiet;
             res.render('shop/covid', {
                 path: '/thong-tin-covid',
                 pageTitle: 'Thông tin Covid',
                 nhietDo,
                 isAuthen: req.session.isLoggedInStaff,
-                isAuthen1: req.session.isLoggedInOnLeave,
+                isAuthen1: req.session.isLoggedInManager,
             });
         })
 
@@ -51,13 +49,7 @@ exports.postCovid = (req, res) => {
                 am_tinh: amtinh,
             },
         ],
-        staffId: req.user,
     });
-    covidData
-        .save()
-        .then((result) => {
-            console.log('Created Data');
-            res.redirect('/thong-tin-ca-nhan');
-        })
-        .catch((err) => console.log(err));
+    req.staff.addInfoCovid(covidData);
+    res.redirect('/thong-tin-ca-nhan');
 };

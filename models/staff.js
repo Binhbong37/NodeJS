@@ -7,6 +7,8 @@ const staffSchema = new Schema({
         type: String,
         required: true,
     },
+    username: { type: String, default: 'Staff' },
+    password: { type: String, default: '1234567' },
     doB: {
         type: Date,
         required: true,
@@ -46,6 +48,30 @@ const staffSchema = new Schema({
             reason: { type: String, required: true },
         },
     ],
+    covidInfo: {
+        thong_tin_than_nhiet: [
+            {
+                ngay_do: { type: Date, required: true },
+                nhiet_do: { type: Number, required: true },
+                gio_do: { type: String, required: true },
+            },
+        ],
+        thong_tin_vacxin: [
+            {
+                mui_1: { type: String, required: true },
+                ngay_tiem_mui_1: { type: Date, required: true },
+                mui_2: { type: String, required: true },
+                ngay_tiem_mui_2: { type: Date, required: true },
+            },
+        ],
+        thong_tin_mac_covid: [
+            {
+                ngay_nhiem: { type: Date },
+                ngay_khoi: { type: Date },
+            },
+        ],
+    },
+    managerId: { type: Schema.Types.ObjectId, ref: 'Manager', required: true },
 });
 
 staffSchema.methods.addCheckIn = function (NewWorkTime) {
@@ -96,6 +122,11 @@ staffSchema.methods.addOnLeave = function (newOnLeave) {
         this.onLeave = updatedOnLeave;
         return this.save();
     }
+};
+
+staffSchema.methods.addInfoCovid = function (dataCovid) {
+    this.covidInfo = dataCovid;
+    return this.save();
 };
 
 module.exports = mongoose.model('Staff', staffSchema);
