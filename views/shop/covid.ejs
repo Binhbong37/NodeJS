@@ -59,11 +59,46 @@
             </form>
             <% if(isAuthen1) { %>
                 <div class="card__actions">
-                    <h2>Kết quả covid</h2>
-                    <% for( let inf of nhietDo) { %>
-                        <p>Nhiệt độ: <%= inf.nhiet_do %></p>
-                        <p>Ngày đo: <%= new Date(inf.ngay_do).getDate() %> - <%= new Date(inf.ngay_do).getMonth() + 1 %> </p>
-                    <% } %>
+                    <h2>Kết quả covid của nhân viên</h2>
+                    <table>
+                        <tr>
+                            <th rowspan="2" style="width: 20%;">Họ và tên</th>
+                            <th colspan="3">Nhiệt độ</th>
+                            <th colspan="4" style="width: 30%;">vacxin</th>
+                            <th colspan="2">Covid</th>
+                            <th rowspan="2"></th>
+                        </tr>
+                        <tr>
+                            <td>Ngày đo</td>
+                            <td>Giờ đo</td>
+                            <td>Kết quả</td>
+                            <td>Mũi 1</td>
+                            <td>ngày tiêm</td>
+                            <td>Mũi 2</td>
+                            <td>Ngày tiêm</td>
+                            <td>Ngày nhiễm</td>
+                            <td>Ngày khỏi</td>
+                        </tr>
+                        <tr>
+                            <td><%= name %></td>
+                            <% for( let inf of nhietDo) { %>
+                            <td><%= new Date(inf.ngay_do).getDate() %> - <%= new Date(inf.ngay_do).getMonth() + 1 %></td>
+                            <td><%= inf.gio_do %></td>
+                            <td><%= inf.nhiet_do %></td>
+                            <% } %>
+                            <% for( let inf of muiTiem) { %>
+                                <td><%= inf.mui_1 %></td>
+                                <td><%= new Date(inf.ngay_tiem_mui_1).getDate() %> - <%= new Date(inf.ngay_tiem_mui_1).getMonth() + 1 %></td>
+                                <td><%= inf.mui_2 %></td>
+                                <td><%= new Date(inf.ngay_tiem_mui_2).getDate() %> - <%= new Date(inf.ngay_tiem_mui_2).getMonth() + 1 %></td>
+                            <% } %>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>
+                               <a href="#" >Xuất PDF</a>
+                            </td>
+                        </tr>
+                    </table>   
                 </div>
                 <% } %>
             </main>

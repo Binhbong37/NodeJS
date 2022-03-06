@@ -132,46 +132,40 @@ exports.postCheckOut = (req, res) => {
 };
 
 exports.getInfStaff = (req, res, next) => {
-    Staff.find()
-        .then((user) => {
-            const staff = {
-                name: user[0].name,
-                doB: moment(user[0].doB).format('LL'),
-                salaryScale: user[0].salaryScale,
-                startDate: moment(user[0].startDate).format('LL'),
-                department: user[0].department,
-                annualLeave: user[0].annualLeave,
-                imageUrl: user[0].imageUrl,
-            };
-            res.render('shop/infoStaff', {
-                path: '/thong-tin-ca-nhan',
-                pageTitle: 'Thông tin cá nhân',
-                staff: [staff],
-                isAuthen: req.session.isLoggedInStaff,
-                isAuthen1: req.session.isLoggedInManager,
-            });
-        })
-        .catch((err) => console.log('K lay dc Staff controller'));
+    const staff = {
+        name: req.staff.name,
+        doB: moment(req.staff.doB).format('LL'),
+        salaryScale: req.staff.salaryScale,
+        startDate: moment(req.staff.startDate).format('LL'),
+        department: req.staff.department,
+        annualLeave: req.staff.annualLeave,
+        imageUrl: req.staff.imageUrl,
+    };
+    res.render('shop/infoStaff', {
+        path: '/thong-tin-ca-nhan',
+        pageTitle: 'Thông tin cá nhân',
+        staff: [staff],
+        isAuthen: req.session.isLoggedInStaff,
+        isAuthen1: req.session.isLoggedInManager,
+    });
 };
 
 exports.getEditStaff = (req, res) => {
-    Staff.find().then((user) => {
-        const staff = {
-            name: user[0].name,
-            doB: moment(user[0].doB).format('LL'),
-            salaryScale: user[0].salaryScale,
-            startDate: moment(user[0].startDate).format('LL'),
-            department: user[0].department,
-            annualLeave: user[0].annualLeave,
-            imageUrl: user[0].imageUrl,
-        };
-        res.render('shop/editInfo', {
-            path: '',
-            pageTitle: 'Chỉnh sửa thông tin',
-            staff: [staff],
-            isAuthen: req.session.isLoggedInStaff,
-            isAuthen1: req.session.isLoggedInManager,
-        });
+    const staff = {
+        name: req.staff.name,
+        doB: moment(req.staff.doB).format('LL'),
+        salaryScale: req.staff.salaryScale,
+        startDate: moment(req.staff.startDate).format('LL'),
+        department: req.staff.department,
+        annualLeave: req.staff.annualLeave,
+        imageUrl: req.staff.imageUrl,
+    };
+    res.render('shop/editInfo', {
+        path: '',
+        pageTitle: 'Chỉnh sửa thông tin',
+        staff: [staff],
+        isAuthen: req.session.isLoggedInStaff,
+        isAuthen1: req.session.isLoggedInManager,
     });
 };
 

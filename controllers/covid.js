@@ -1,14 +1,18 @@
-const Covid = require('../models/covid');
+const Staff = require('../models/staff');
 
 exports.getCovid = (req, res, next) => {
-    Covid.find()
-        .populate()
+    Staff.find()
         .then((result) => {
-            let nhietDo = result[0].thong_tin_than_nhiet;
+            let nhietDo = result[0].covidInfo.thong_tin_than_nhiet;
+            let muiTiem = result[0].covidInfo.thong_tin_vacxin;
+            let duongTinh = result[0].covidInfo.thong_tin_mac_covid;
             res.render('shop/covid', {
                 path: '/thong-tin-covid',
                 pageTitle: 'Thông tin Covid',
                 nhietDo,
+                muiTiem,
+                duongTinh,
+                name: result[0].name,
                 isAuthen: req.session.isLoggedInStaff,
                 isAuthen1: req.session.isLoggedInManager,
             });

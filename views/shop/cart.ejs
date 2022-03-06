@@ -1,5 +1,6 @@
 <%- include('../includes/head.ejs') %>
     <link rel="stylesheet" href="/css/cart.css">
+    <link rel="stylesheet" href="/css/orders.css">
     </head>
 
     <body>
@@ -19,27 +20,71 @@
                 </ul>
                 <hr>
                 <% if(checkStaff == 'true') { %>
-                <div class="cart__item-list">
-                    <h2>Danh sách giờ làm</h2>
-                    <table>
-                        <tr>
-                          <th>Ngày</th>
-                          <th>giờ bắt đầu</th>
-                          <th>giờ bắt đầu</th>
-                          <th>Tính làm thêm</th>
-                        </tr>
-                        <tr>
-                          <td>1</td>
-                          <td>1 giờ</td>
-                          <td>1</td>
-                          <td>1</td>
-                          <td>
-                              <a href="/thong-tin-ca-nhan" class="btn">Xóa</a>
-                          </td>
-                        </tr>
-                        <h4>Số giờ đã làm:</h4>
-                        <h4>AnnuaLeave:</h4>
-                    </table>
+                  <table>
+                    <a href="/check-out" class="btn">Chi tiết làm hôm nay</a>
+                          <h2>Danh sách giờ làm</h2> 
+                          <hr />
+                          <tr>
+                            <th>Ngày</th>
+                            <th>Giờ vào</th>
+                            <th>Giờ ra</th>
+                            <th>Địa điểm</th>
+                            <th>Giờ làm thêm</th>
+                            <th></th>
+                          </tr>
+                          <% for (let prod of inf) { %> 
+                          <tr>
+                            <td><%= prod.dayWork %></td>
+                            <td><%= prod.startDate %></td>
+                            <td><%= prod.endDate %></td>
+                            <td><%= prod.place %></td>
+                            <td><%= prod.overTime %> giờ</td>
+                            <td>
+                              <a href="#" class="btn">Xóa</a>
+                            </td>
+                          </tr>
+                          <% } %>
+                  </table>
+                  <table>
+                      <h2>Xin nghỉ phép</h2>
+                      <tr>
+                        <th>Ngày nghỉ</th>
+                        <th>Số giờ nghỉ</th>
+                        <th>Lý do</th>
+                      </tr>
+                      
+                      <% for (let prod of user.onLeave) { %>
+                      <tr>
+                        <td><%= prod.dayOff %></td>
+                        <td><%= prod.hourOff %> giờ</td>
+                        <td><%= prod.reason %></td>
+                      </tr>
+                      
+                      <% } %>
+                  </table>
+                  <div class="referenceStaff__wrapper">
+                    <h3 class="referenceStaff__title">Chi tiết Lương</h3>
+                    <form class="form-select-month" action="/thong-tin-gio-lam" method="post">
+                        <label for="month">Tháng</label>
+                        <select class="select-month" name="month">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                        <button type="submit">Đến</button>
+                    </form>
+                    <p class="referenceStaff__salary">
+                        Số tiền ở đây: <%= salary %>
+                    </p>
                 </div>
                 <% } %>
                 <div class="centered">
