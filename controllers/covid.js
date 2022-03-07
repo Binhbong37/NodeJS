@@ -31,7 +31,7 @@ exports.postCovid = (req, res) => {
     const ngaytiem2 = req.body.ngaytiem2;
     const duongtinh = req.body.duongtinh;
     const amtinh = req.body.amtinh;
-    const covidData = new Covid({
+    const covidData = {
         thong_tin_than_nhiet: [
             {
                 ngay_do: ngaydonhietdo,
@@ -53,7 +53,7 @@ exports.postCovid = (req, res) => {
                 am_tinh: amtinh,
             },
         ],
-    });
+    };
     req.staff.addInfoCovid(covidData);
     res.redirect('/thong-tin-ca-nhan');
 };

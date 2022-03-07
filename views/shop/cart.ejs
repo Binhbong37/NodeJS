@@ -21,7 +21,6 @@
                 <hr>
                 <% if(checkStaff == 'true') { %>
                   <table>
-                    <a href="/check-out" class="btn">Chi tiết làm hôm nay</a>
                           <h2>Danh sách giờ làm</h2> 
                           <hr />
                           <tr>
@@ -40,27 +39,13 @@
                             <td><%= prod.place %></td>
                             <td><%= prod.overTime %> giờ</td>
                             <td>
-                              <a href="#" class="btn">Xóa</a>
+                              <form method="post" action="/delete-worktime">
+                                <input type="hidden" value="<%= prod._id %>" name="workTimeId">
+                                <button class="btn" type="submit">Xóa</button>
+                              </form>
                             </td>
                           </tr>
                           <% } %>
-                  </table>
-                  <table>
-                      <h2>Xin nghỉ phép</h2>
-                      <tr>
-                        <th>Ngày nghỉ</th>
-                        <th>Số giờ nghỉ</th>
-                        <th>Lý do</th>
-                      </tr>
-                      
-                      <% for (let prod of user.onLeave) { %>
-                      <tr>
-                        <td><%= prod.dayOff %></td>
-                        <td><%= prod.hourOff %> giờ</td>
-                        <td><%= prod.reason %></td>
-                      </tr>
-                      
-                      <% } %>
                   </table>
                   <div class="referenceStaff__wrapper">
                     <h3 class="referenceStaff__title">Chi tiết Lương</h3>

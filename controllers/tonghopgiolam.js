@@ -7,7 +7,7 @@ exports.getTongHopGioLam = (req, res, next) => {
     Staff.find()
         .then((result) => {
             const result1 = result[0].workTimes.filter((re) => {
-                return re.status === false;
+                return re.status === false && re.softDelete === false;
             });
             return result1;
         })
@@ -49,7 +49,7 @@ exports.getTongHop = (req, res) => {
     Staff.find()
         .then((result) => {
             const result1 = result[0].workTimes.filter((re) => {
-                return re.status === false;
+                return re.status === false && re.softDelete === false;
             });
             return result1;
         })
@@ -61,6 +61,7 @@ exports.getTongHop = (req, res) => {
                     timeOver = overTime - 8;
                 }
                 return {
+                    _id: inf._id,
                     dayWork: moment(inf.startWork).format('ll'),
                     startDate: moment(inf.startWork).format('lll'),
                     endDate: moment(inf.endWork).format('lll'),
@@ -77,7 +78,6 @@ exports.getTongHop = (req, res) => {
                 path: '/tong-hop-gio-lam',
                 pageTitle: 'Tra cứu thông tin giờ làm',
                 inf: result,
-                user: req.staff,
                 salary: salary,
                 checkStaff: checkQ,
                 isAuthen: req.session.isLoggedInStaff,
@@ -88,4 +88,19 @@ exports.getTongHop = (req, res) => {
 
 exports.postManager = (req, res) => {
     res.redirect('/');
+};
+
+exports.postDeleteWorkTime = (req, res) => {
+    const workTimeId = req.body.workTimeId;
+    Staff.updateOne(
+        { 'workTimes._id': workTimeId },
+        {
+            $set: { 'workTimes.$.softDelete': true },
+        }
+    )
+        .then((result) => {
+            console.log('Thanh cong o ze');
+            res.redirect('/tong-hop-gio-lam/?nv=true');
+        })
+        .catch((err) => console.log(err));
 };

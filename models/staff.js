@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongooseDelete = require('mongoose-delete');
 
 const Schema = mongoose.Schema;
 
@@ -39,6 +40,7 @@ const staffSchema = new Schema({
             status: { type: Boolean, default: true },
             startWork: { type: Date, default: new Date() },
             endWork: { type: Date },
+            softDelete: { type: Boolean, default: false },
         },
     ],
     onLeave: [
@@ -129,4 +131,7 @@ staffSchema.methods.addInfoCovid = function (dataCovid) {
     return this.save();
 };
 
+this.updateWorkTime = function (workTimeId) {
+    console.log(workTimeId);
+};
 module.exports = mongoose.model('Staff', staffSchema);

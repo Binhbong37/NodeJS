@@ -13,4 +13,6 @@ router.get('/tong-hop-gio-lam', isLogin, gioLamController.getTongHop);
 
 router.post('/xac-nhan-quan-ly', gioLamController.postManager);
 
+router.post('/delete-worktime', isLogin, gioLamController.postDeleteWorkTime);
+
 module.exports = router;
