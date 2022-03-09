@@ -19,7 +19,11 @@
                         <option value="3">Khách hàng</option>
                     </select>
                 </div>  
-            
+                <input
+                type="hidden"
+                name="_csrf"
+                value="<%= csrfToken %>"
+            />
             <button class="btn" type="submit">
                 Xác nhận
             </button>

@@ -4,6 +4,8 @@ const path = require('path');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const mongoose = require('mongoose');
+const csrf = require('csurf');
+const flash = require('connect-flash');
 
 const app = express();
 const MONGODB_URI = 'mongodb://localhost:27017/funix_njs_asm';
@@ -11,6 +13,9 @@ const store = new MongoDBStore({
     uri: MONGODB_URI,
     collection: 'sessions',
 });
+
+const csrfProtection = csrf();
+app.use(flash());
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
@@ -36,6 +41,7 @@ app.use(
         store: store,
     })
 );
+app.use(csrfProtection);
 
 app.use((req, res, next) => {
     if (!req.session.staff && !req.session.manager) {
@@ -55,6 +61,11 @@ app.use((req, res, next) => {
             })
             .catch((err) => console.log(err));
     }
+});
+
+app.use((req, res, next) => {
+    res.locals.csrfToken = req.csrfToken();
+    next();
 });
 
 app.use(shopRoutes);

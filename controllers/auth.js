@@ -2,11 +2,18 @@ const Staff = require('../models/staff');
 const Manager = require('../models/manager');
 
 exports.getLogin = (req, res) => {
+    let message = req.flash('error');
+    if (message.length > 0) {
+        message = message[0];
+    } else {
+        message = null;
+    }
     res.render('auth/login', {
         path: '/login',
         pageTitle: 'Dang Nhap',
         isAuthen: req.session.isLoggedInStaff,
         isAuthen1: req.session.isLoggedInManager,
+        errorMessage: message,
     });
 };
 
@@ -20,6 +27,10 @@ exports.postLogin = (req, res) => {
                 Manager.findOne({ username: username })
                     .then((manager) => {
                         if (!manager) {
+                            req.flash(
+                                'error',
+                                'Người dùng hoặc mật khẩu không đúng'
+                            );
                             return res.redirect('/login');
                         } else {
                             console.log('KET BAY. . . ');

@@ -1,5 +1,3 @@
-const moment = require('moment');
-
 class Methods {
     getSalary = (month, staff) => {
         console.log('Tháng: ', +month);

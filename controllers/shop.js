@@ -23,6 +23,7 @@ exports.getIndex = (req, res, next) => {
         result: newData,
         isAuthen: req.session.isLoggedInStaff,
         isAuthen1: req.session.isLoggedInManager,
+        csrfToken: req.csrfToken(),
     });
 };
 

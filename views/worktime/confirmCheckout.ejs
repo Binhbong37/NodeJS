@@ -21,7 +21,11 @@
             <div class="form-control" style="font-size: 20px;">
                 Thời gian kết thúc: <%= dateNow %>
             </div> 
-           
+            <input
+            type="hidden"
+            name="_csrf"
+            value="<%= csrfToken %>"
+        />
             <button class="btn" type="submit">
                 Xác nhận
             </button>

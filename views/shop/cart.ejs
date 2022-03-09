@@ -9,7 +9,7 @@
                 <ul class="cart__item-list">
                     <h2>Danh sách nhân viên</h2>
                     <li class="cart__item">
-                        Nguyen Van A <a href="/tong-hop-gio-lam/?nv=true">Chi tiết</a>
+                        <%= name %> <a href="/tong-hop-gio-lam/<%= staffId %>?nv=true">Chi tiết</a>
                     </li>
                     <li class="cart__item">
                         NV 1 <a href="/">Chi tiết</a>
@@ -18,10 +18,11 @@
                         NV 1 <a href="/">Chi tiết</a>
                     </li>
                 </ul>
-                <hr>
                 <% if(checkStaff == 'true') { %>
                   <table>
-                          <h2>Danh sách giờ làm</h2> 
+                          <h2>Danh sách giờ làm</h2>
+                          <p><b><%= name %></b></p>
+                          <p>AnnualLeave: <%= dayLeave %></p>
                           <hr />
                           <tr>
                             <th>Ngày</th>
@@ -47,36 +48,14 @@
                           </tr>
                           <% } %>
                   </table>
-                  <div class="referenceStaff__wrapper">
-                    <h3 class="referenceStaff__title">Chi tiết Lương</h3>
-                    <form class="form-select-month" action="/thong-tin-gio-lam" method="post">
-                        <label for="month">Tháng</label>
-                        <select class="select-month" name="month">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                            <option value="11">11</option>
-                            <option value="12">12</option>
-                        </select>
-                        <button type="submit">Đến</button>
-                    </form>
-                    <p class="referenceStaff__salary">
-                        Số tiền ở đây: <%= salary %>
-                    </p>
-                </div>
-                <% } %>
                 <div class="centered">
                     <form action="/xac-nhan-quan-ly" method="POST">
+                      <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
                         <button type="submit" class="btn">Xác nhận</button>
                     </form>
                 </div>
+                <% } %>
+                
                 
         </main>
         <%- include('../includes/end.ejs') %>
