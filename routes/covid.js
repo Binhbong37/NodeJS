@@ -7,6 +7,8 @@ const isLogin = require('../middleware/isLogin');
 
 router.get('/thong-tin-covid', isLogin, covidController.getCovid);
 
-router.post('/post-covid', covidController.postCovid);
+router.post('/post-covid', isLogin, covidController.postCovid);
+
+router.get('/covid/:staffId', covidController.getCovidDetail);
 
 module.exports = router;
