@@ -4,19 +4,20 @@ const Methods = require('../util/salary');
 
 exports.getTongHopGioLam = (req, res, next) => {
     if (req.session.staff) {
-        req.staff
+        Staff.find()
             .populate('managerId')
-            .execPopulate()
+            // .execPopulate()
             .then((staff) => {
-                const idAdmin = staff.managerId._id;
-                const nameAdmin = staff.managerId.name;
-                const result1 = staff.workTimes.filter((re) => {
+                const idAdmin = staff[0].managerId._id;
+                const nameAdmin = staff[0].managerId.name;
+                const result1 = staff[0].workTimes.filter((re) => {
                     return re.status === false;
                 });
                 return { idAdmin, nameAdmin, result1 };
             })
             .then((result) => {
-                const salary = Methods.getSalary(req.body.month, req.staff);
+                const salary1 = Methods.getSalary(req.body.month, req.staff);
+                const salary = Math.round(salary1 * 100) / 100;
                 const result2 = result.result1.map((inf) => {
                     const overTime = (inf.endWork - inf.startWork) / 36e5;
                     let timeOver = 0;
@@ -36,6 +37,12 @@ exports.getTongHopGioLam = (req, res, next) => {
                                 : 'KH',
                     };
                 });
+                const check = req.query.row;
+                if (check === '2') {
+                    result2.splice('2');
+                } else if (check === '4') {
+                    result2.splice('4');
+                }
                 res.render('shop/tonghopgiolam', {
                     path: '/thong-tin-gio-lam',
                     pageTitle: 'Tra cứu thông tin giờ làm',

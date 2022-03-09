@@ -7,7 +7,7 @@
         <main>
             <table>
               <a href="/check-out" class="btn">Chi tiết làm hôm nay</a>
-                    <h2>Danh sách giờ làm</h2> 
+                    <h2>Danh sách giờ làm:</h2> 
                     <hr />
                     <tr>
                       <th>Ngày</th>
@@ -26,6 +26,11 @@
                     </tr>
                     <% } %>
             </table>
+            <section class="pagination">
+                <a href="/thong-tin-gio-lam/?row=2">1</a>
+                <a href="/thong-tin-gio-lam/?row=4">2</a>
+                <a href="/thong-tin-gio-lam/?row=6">3</a>
+            </section>
             <table>
                 <h2>Xin nghỉ phép</h2>
                 <tr>
@@ -61,6 +66,7 @@
                       <option value="11">11</option>
                       <option value="12">12</option>
                   </select>
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
                   <button type="submit">Đến</button>
               </form>
               <p class="referenceStaff__salary">
