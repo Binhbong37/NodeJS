@@ -8,7 +8,7 @@
         <%- include('../includes/navigation.ejs') %>
 
             <main>
-                <form action="/edit-staff" method="POST">
+                <form action="/edit-staff" method="POST" enctype="multipart/form-data">
                     <% if(staff.length > 0) { %>
                         <div class="grid">
                             <% for( let inf of staff) { %> 
@@ -34,9 +34,13 @@
                                         <p class="product__title">
                                             annualLeave: <%= inf.annualLeave %>
                                         </p>
-                                        <div class="form-control">
+                                        <!-- <div class="form-control">
                                             <label for="imageUrl"><p>Image URL</p></label>
                                             <input type="text" name="imageUrl" id="imageUrl" value="<%= inf.imageUrl %>">
+                                        </div> -->
+                                        <div class="form-control">
+                                            <label for="imageUrl"><p>Image</p></label>
+                                            <input type="file" name="image" id="image">
                                         </div>
                                     </header>
                                     <div class="card__actions">

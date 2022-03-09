@@ -1,4 +1,5 @@
 const Staff = require('../models/staff');
+const Manager = require('../models/manager');
 const moment = require('moment');
 const Methods = require('../util/salary');
 
@@ -171,15 +172,31 @@ exports.getEditStaff = (req, res) => {
 };
 
 exports.postEditStaff = (req, res) => {
-    const imageUrl = req.body.imageUrl;
+    const image = req.file;
     const id = req.staff._id;
-    Staff.findById(id)
-        .then((staff) => {
-            staff.imageUrl = imageUrl;
-            return staff.save();
-        })
-        .then(() => {
-            console.log('ImageUrl UPDATED SUCCESS !');
-            res.redirect('/thong-tin-ca-nhan');
-        });
+    if (req.session.staff) {
+        Staff.findById(id)
+            .then((staff) => {
+                if (image) {
+                    staff.imageUrl = image.path;
+                }
+                return staff.save();
+            })
+            .then(() => {
+                console.log('ImageUrl UPDATED SUCCESS !');
+                res.redirect('/thong-tin-ca-nhan');
+            });
+    } else {
+        Manager.findById(id)
+            .then((staff) => {
+                if (image) {
+                    staff.imageUrl = image.path;
+                }
+                return staff.save();
+            })
+            .then(() => {
+                console.log('ImageUrl UPDATED SUCCESS !');
+                res.redirect('/thong-tin-ca-nhan');
+            });
+    }
 };
