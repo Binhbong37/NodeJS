@@ -2,6 +2,7 @@ const Staff = require('../models/staff');
 const Manager = require('../models/manager');
 const moment = require('moment');
 const Methods = require('../util/salary');
+const fileHelper = require('../util/file');
 
 exports.getIndex = (req, res, next) => {
     const result = req.staff.workTimes.filter((re) => {
@@ -178,6 +179,7 @@ exports.postEditStaff = (req, res) => {
         Staff.findById(id)
             .then((staff) => {
                 if (image) {
+                    fileHelper.deleteFile(staff.imageUrl);
                     staff.imageUrl = image.path;
                 }
                 return staff.save();
@@ -190,6 +192,7 @@ exports.postEditStaff = (req, res) => {
         Manager.findById(id)
             .then((staff) => {
                 if (image) {
+                    fileHelper.deleteFile(staff.imageUrl);
                     staff.imageUrl = image.path;
                 }
                 return staff.save();

@@ -3,39 +3,87 @@ const moment = require('moment');
 const Methods = require('../util/salary');
 
 exports.getTongHopGioLam = (req, res, next) => {
-    const salary = Methods.getSalary(req.body.month, req.staff);
-    const result1 = req.staff.workTimes.filter((re) => {
-        return re.status === false;
-    });
+    if (req.session.staff) {
+        req.staff
+            .populate('managerId')
+            .execPopulate()
+            .then((staff) => {
+                const idAdmin = staff.managerId._id;
+                const nameAdmin = staff.managerId.name;
+                const result1 = staff.workTimes.filter((re) => {
+                    return re.status === false;
+                });
+                return { idAdmin, nameAdmin, result1 };
+            })
+            .then((result) => {
+                const salary = Methods.getSalary(req.body.month, req.staff);
+                const result2 = result.result1.map((inf) => {
+                    const overTime = (inf.endWork - inf.startWork) / 36e5;
+                    let timeOver = 0;
+                    if (overTime > 8) {
+                        timeOver = overTime - 8;
+                    }
+                    return {
+                        dayWork: moment(inf.startWork).format('ll'),
+                        startDate: moment(inf.startWork).format('lll'),
+                        endDate: moment(inf.endWork).format('lll'),
+                        overTime: Math.round(timeOver * 100) / 100,
+                        place:
+                            inf.place === '1'
+                                ? 'Công ty'
+                                : inf.place === '2'
+                                ? 'Ở nhà'
+                                : 'KH',
+                    };
+                });
+                res.render('shop/tonghopgiolam', {
+                    path: '/thong-tin-gio-lam',
+                    pageTitle: 'Tra cứu thông tin giờ làm',
+                    inf: result2,
+                    user: req.staff,
+                    salary: salary,
+                    nameAdmin: result.nameAdmin,
+                    idAdmin: result.idAdmin,
+                    isAuthen: req.session.isLoggedInStaff,
+                    isAuthen1: req.session.isLoggedInManager,
+                });
+            })
+            .catch((err) => console.log(err));
+    } else {
+        const salary = Methods.getSalary(req.body.month, req.staff);
+        const result1 = req.staff.workTimes.filter((re) => {
+            return re.status === false;
+        });
 
-    const result = result1.map((inf) => {
-        const overTime = (inf.endWork - inf.startWork) / 36e5;
-        let timeOver = 0;
-        if (overTime > 8) {
-            timeOver = overTime - 8;
-        }
-        return {
-            dayWork: moment(inf.startWork).format('ll'),
-            startDate: moment(inf.startWork).format('lll'),
-            endDate: moment(inf.endWork).format('lll'),
-            overTime: Math.round(timeOver * 100) / 100,
-            place:
-                inf.place === '1'
-                    ? 'Công ty'
-                    : inf.place === '2'
-                    ? 'Ở nhà'
-                    : 'KH',
-        };
-    });
-    res.render('shop/tonghopgiolam', {
-        path: '/thong-tin-gio-lam',
-        pageTitle: 'Tra cứu thông tin giờ làm',
-        inf: result,
-        user: req.staff,
-        salary: salary,
-        isAuthen: req.session.isLoggedInStaff,
-        isAuthen1: req.session.isLoggedInManager,
-    });
+        const result = result1.map((inf) => {
+            const overTime = (inf.endWork - inf.startWork) / 36e5;
+            let timeOver = 0;
+            if (overTime > 8) {
+                timeOver = overTime - 8;
+            }
+            return {
+                dayWork: moment(inf.startWork).format('ll'),
+                startDate: moment(inf.startWork).format('lll'),
+                endDate: moment(inf.endWork).format('lll'),
+                overTime: Math.round(timeOver * 100) / 100,
+                place:
+                    inf.place === '1'
+                        ? 'Công ty'
+                        : inf.place === '2'
+                        ? 'Ở nhà'
+                        : 'KH',
+            };
+        });
+        res.render('shop/tonghopgiolam', {
+            path: '/thong-tin-gio-lam',
+            pageTitle: 'Tra cứu thông tin giờ làm',
+            inf: result,
+            user: req.staff,
+            salary: salary,
+            isAuthen: req.session.isLoggedInStaff,
+            isAuthen1: req.session.isLoggedInManager,
+        });
+    }
 };
 
 exports.getTongHop = (req, res) => {

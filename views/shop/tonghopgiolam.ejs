@@ -67,5 +67,12 @@
                   Số tiền ở đây: <%= salary %>
               </p>
           </div>
+          <% if(isAuthen) { %>
+            <div>
+              <h1>Người quản lý </h1>
+              <h2>Họ và tên: <%= nameAdmin %></h2>
+              <h2>ID: <%= idAdmin %></h2>
+            </div>
+          <% } %>
         </main>
         <%- include('../includes/end.ejs') %>
