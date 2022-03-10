@@ -95,8 +95,17 @@ exports.getTongHopGioLam = (req, res, next) => {
 
 exports.getTongHop = (req, res) => {
     const checkQ = req.query.nv;
+    const staffId = req.params.worKID;
+    console.log(staffId);
 
     Staff.find()
+        // .then((staff) => {
+
+        //     const findStaff = staff.filter((idStaff) => {
+        //         return idStaff._id.toString() === staffId.toString();
+        //     });
+        //     return findStaff;
+        // })
         .then((result) => {
             const result1 = result[0].workTimes.filter((re) => {
                 return re.status === false && re.softDelete === false;
@@ -164,6 +173,28 @@ exports.postDeleteWorkTime = (req, res) => {
 };
 
 exports.postDeleteWorkTimes = (req, res) => {
-    console.log('Xoa tu DB');
-    res.redirect('/');
+    Staff.find()
+        .then((staff) => {
+            const test = staff[0].workTimes.filter((check) => {
+                return check.softDelete !== true;
+            });
+            staff[0].workTimes = test;
+            return staff[0].save();
+        })
+        .then(() => {
+            Staff.updateOne(
+                { 'managerConfirm.isManagerCheck': true },
+                {
+                    $set: { 'managerConfirm.$.isManagerCheck': false },
+                }
+            )
+                .then((result) => {
+                    console.log('Set confirm: true');
+                })
+                .catch((err) => console.log(err));
+        })
+        .then(() => {
+            res.redirect('/tong-hop-gio-lam/?nv=true');
+        })
+        .catch((err) => console.log(err));
 };

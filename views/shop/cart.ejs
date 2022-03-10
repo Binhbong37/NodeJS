@@ -21,8 +21,8 @@
                 <% if(checkStaff == 'true') { %>
                   <table>
                           <h2>Danh sách giờ làm</h2>
-                          <p><b><%= name %></b></p>
-                          <p>AnnualLeave: <%= dayLeave %></p>
+                          <p><b>Nhân viên: <%= name %></b></p>
+                          <p>Tổng số giờ nghỉ đã đăng ký trong tháng: <%= dayLeave %> giờ</p>
                           <hr />
                           <tr>
                             <th>Ngày</th>
@@ -41,6 +41,7 @@
                             <td><%= prod.overTime %> giờ</td>
                             <td>
                               <form method="post" action="/delete-worktime">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
                                 <input type="hidden" value="<%= prod._id %>" name="workTimeId">
                                 <button class="btn" type="submit">Xóa</button>
                               </form>

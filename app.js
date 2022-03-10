@@ -117,6 +117,12 @@ mongoose
                     annualLeave: 12,
                     imageUrl:
                         'https://st.quantrimang.com/photos/image/2021/08/27/hinh-anh-cam-on-4.jpg',
+                    managerConfirm: [
+                        {
+                            isManagerCheck: true,
+                            dayStaff: new Date(),
+                        },
+                    ],
                     workTimes: [],
                     onLeave: [],
                     covidInfo: {

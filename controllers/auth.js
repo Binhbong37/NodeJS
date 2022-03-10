@@ -38,7 +38,7 @@ exports.postLogin = (req, res) => {
                             req.session.isLoggedInManager = true;
                             return req.session.save((err) => {
                                 console.log(err);
-                                res.redirect('/');
+                                res.redirect('/thong-tin-ca-nhan');
                             });
                         }
                     })
@@ -48,7 +48,7 @@ exports.postLogin = (req, res) => {
                 req.session.staff = staff;
                 return req.session.save((err) => {
                     console.log(err);
-                    res.redirect('/');
+                    res.redirect('/thong-tin-ca-nhan');
                 });
             }
         })

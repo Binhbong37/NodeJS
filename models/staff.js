@@ -34,6 +34,13 @@ const staffSchema = new Schema({
         type: String,
         required: true,
     },
+    managerConfirm: [
+        {
+            isManagerCheck: { type: Boolean, default: true },
+            dayStaff: { type: Date, default: new Date() },
+            dayCheck: { type: Date },
+        },
+    ],
     workTimes: [
         {
             place: { type: String, required: true },
@@ -111,7 +118,7 @@ staffSchema.methods.addOnLeave = function (newOnLeave) {
         timeChange = addTime / 8 - this.annualLeave;
         this.annualLeave = this.annualLeave;
     } else {
-        this.annualLeave = this.annualLeave - addTime / 8;
+        this.annualLeave = 12 - addTime / 8;
     }
     console.log('annualLeave: ', this.annualLeave);
 

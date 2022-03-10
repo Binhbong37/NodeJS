@@ -5,28 +5,68 @@ const Methods = require('../util/salary');
 const fileHelper = require('../util/file');
 
 exports.getIndex = (req, res, next) => {
-    const result = req.staff.workTimes.filter((re) => {
-        return re.status === true;
-    });
-    let newData = [];
-    if (result.length > 0) {
-        newData = [
-            {
-                place: result[0].place,
-                startTime: moment(result[0].startWork).format('LT'),
-                status: result[0].status,
-            },
-        ];
-    }
+    if (req.session.staff) {
+        Staff.find()
+            .then((staff) => {
+                let newData = [];
 
-    res.render('worktime/index', {
-        pageTitle: 'Điểm danh/kết thúc',
-        path: '/',
-        result: newData,
-        isAuthen: req.session.isLoggedInStaff,
-        isAuthen1: req.session.isLoggedInManager,
-        csrfToken: req.csrfToken(),
-    });
+                let staffData = staff[0].workTimes.filter((re) => {
+                    return re.status === true;
+                });
+                let isCheck = staff[0].managerConfirm.filter((result) => {
+                    return result.isManagerCheck === true;
+                });
+                let isManageConfirm = false;
+                if (isCheck.length > 0) {
+                    isManageConfirm = isCheck[0].isManagerCheck;
+                }
+
+                if (staffData.length > 0) {
+                    newData = [
+                        {
+                            place: staffData[0].place,
+                            startTime: moment(staffData[0].startWork).format(
+                                'LT'
+                            ),
+                            status: staffData[0].status,
+                        },
+                    ];
+                }
+                res.render('worktime/index', {
+                    pageTitle: 'Điểm danh/kết thúc',
+                    path: '/',
+                    result: newData,
+                    checkConfirm: isManageConfirm,
+                    isAuthen: req.session.isLoggedInStaff,
+                    isAuthen1: req.session.isLoggedInManager,
+                    csrfToken: req.csrfToken(),
+                });
+            })
+            .catch((err) => console.log(err));
+    } else {
+        const result = req.staff.workTimes.filter((re) => {
+            return re.status === true;
+        });
+        let newData = [];
+        if (result.length > 0) {
+            newData = [
+                {
+                    place: result[0].place,
+                    startTime: moment(result[0].startWork).format('LT'),
+                    status: result[0].status,
+                },
+            ];
+        }
+
+        res.render('worktime/index', {
+            pageTitle: 'Điểm danh/kết thúc',
+            path: '/',
+            result: newData,
+            isAuthen: req.session.isLoggedInStaff,
+            isAuthen1: req.session.isLoggedInManager,
+            csrfToken: req.csrfToken(),
+        });
+    }
 };
 
 exports.getConfirmCheckIn = (req, res, next) => {
@@ -113,6 +153,7 @@ exports.getCheckout = (req, res) => {
                 pageTitle: 'Thông tin giờ làm hôm nay',
                 result: result,
                 totalTime: dayOff + Math.round(totalTime * 100) / 100,
+                annualLeave: dayOff,
                 isAuthen: req.session.isLoggedInStaff,
                 isAuthen1: req.session.isLoggedInManager,
             });

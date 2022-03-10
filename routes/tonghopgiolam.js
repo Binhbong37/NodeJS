@@ -9,9 +9,8 @@ router.get('/thong-tin-gio-lam', isLogin, gioLamController.getTongHopGioLam);
 
 router.post('/thong-tin-gio-lam', gioLamController.getTongHopGioLam);
 
-router.get('/tong-hop-gio-lam/:worKID', isLogin, gioLamController.getTongHop);
-
 router.get('/tong-hop-gio-lam', isLogin, gioLamController.getTongHop);
+router.get('/tong-hop-gio-lam/:worKID', isLogin, gioLamController.getTongHop);
 
 router.post('/delete-worktime', isLogin, gioLamController.postDeleteWorkTime);
 

@@ -5,16 +5,23 @@
 <body>
     <%- include('../includes/navigation.ejs') %>
     <main>
-        <%- include('../includes/button.ejs') %>
-        <div class="centered">
-            <% if (result.length > 0 && result[0].status) { %>
-                <h2 class="index__title">Kết thúc để có gạo</h3>
-                    <p>Mỗi ngày hãy cố gắng thêm một chút !!!</p>
-                    <%- include('thongtinlamviec.ejs', result) %>
-                    <% }else{%>
-                        <h2 class="index__title">Điểm danh để làm việc</h3>
-                            <i>Vì một tương lai ấm no !!!!</i>
-                            <% } %>
+        <% if(checkConfirm) { %>
+            <%- include('../includes/button.ejs') %>
+            <div class="centered">
+                <% if (result.length > 0 && result[0].status) { %>
+                    <h2 class="index__title">Kết thúc để có gạo</h3>
+                        <p>Mỗi ngày hãy cố gắng thêm một chút !!!</p>
+                        <%- include('thongtinlamviec.ejs', result) %>
+                        <% }else{%>
+                            <h2 class="index__title">Điểm danh để làm việc</h3>
+                                <i>Vì một tương lai ấm no !!!!</i>
+                                <% } %>
+        <% } else { %>
+                <div class="centered">
+                    <h1>Tháng này đã chốt công</h1>
+                    <img src="https://hocluat.vn/wp-content/uploads/2020/02/tham-phan.jpg" />
+                </div>
+        <% } %>
     </main>
     
 <%- include('../includes/end.ejs') %>

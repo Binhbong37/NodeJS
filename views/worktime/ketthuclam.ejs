@@ -5,7 +5,8 @@
     <body>
         <%- include('../includes/navigation.ejs') %>
         <main>
-            <h2>Tổng giờ làm hôm nay: <%= totalTime %></h2>
+            <h2>Tổng giờ làm hôm nay (cộng cả giờ ngày nghỉ): <%= totalTime %></h2>
+            <h3>Số giờ đăng ký nghỉ: <%= annualLeave %></h3>
             <hr />
             <div class="orders">
                     <% if (result.length > 0) { %>
