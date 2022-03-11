@@ -83,7 +83,6 @@ exports.postNewStart = (req, res) => {
         })
         .then(() => {
             console.log('Tao thang moi thanh cong');
-            alert('Tao thành công!!');
             res.redirect('/tong-hop-gio-lam/?nv=true');
         })
         .catch((err) => console.log(err));
