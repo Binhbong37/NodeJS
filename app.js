@@ -9,7 +9,8 @@ const flash = require('connect-flash');
 const multer = require('multer');
 
 const app = express();
-const MONGODB_URI = 'mongodb://localhost:27017/funix_njs_asm';
+const MONGODB_URI =
+    'mongodb+srv://binhbong:1761996@practicelab.u9bxm.mongodb.net/asm_node_funix';
 const store = new MongoDBStore({
     uri: MONGODB_URI,
     collection: 'sessions',
@@ -130,7 +131,7 @@ mongoose
                         thong_tin_vacxin: [],
                         thong_tin_mac_covid: [],
                     },
-                    managerId: '622329d619a7ff40e036bfd7',
+                    managerId: '622ab972b4e409055cf2d7de',
                 });
                 newUser.save();
             }
@@ -138,7 +139,7 @@ mongoose
     })
     .then(() => {
         console.log('Ket noi voi MONGOOSE ASM !!!');
-        app.listen(3737);
+        app.listen(process.env.PORT || 3737);
     })
     .catch((err) => {
         console.log('Lỗi kết nối với Mongoose', err);
