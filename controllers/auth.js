@@ -61,3 +61,30 @@ exports.postLogout = (req, res) => {
         res.redirect('/login');
     });
 };
+
+exports.getNewStart = (req, res) => {
+    res.render('auth/openStart', {
+        path: '',
+        pageTitle: 'Bắt đầu tháng mới',
+        isAuthen: req.session.isLoggedInStaff,
+        isAuthen1: req.session.isLoggedInManager,
+    });
+};
+
+exports.postNewStart = (req, res) => {
+    Staff.find()
+        .then((staff) => {
+            const newStaff = {
+                isManagerCheck: true,
+                dayStaff: new Date(),
+            };
+            staff[0].managerConfirm.push(newStaff);
+            return staff[0].save();
+        })
+        .then(() => {
+            console.log('Tao thang moi thanh cong');
+            alert('Tao thành công!!');
+            res.redirect('/tong-hop-gio-lam/?nv=true');
+        })
+        .catch((err) => console.log(err));
+};

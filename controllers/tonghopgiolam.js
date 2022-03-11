@@ -194,7 +194,7 @@ exports.postDeleteWorkTimes = (req, res) => {
                 .catch((err) => console.log(err));
         })
         .then(() => {
-            res.redirect('/tong-hop-gio-lam/?nv=true');
+            res.redirect('/kich-hoat');
         })
         .catch((err) => console.log(err));
 };
