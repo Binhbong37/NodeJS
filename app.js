@@ -61,6 +61,7 @@ app.use(
         store: store,
     })
 );
+
 app.use(csrfProtection);
 app.use(flash());
 
@@ -71,7 +72,6 @@ app.use((req, res, next) => {
 });
 
 app.use((req, res, next) => {
-    // throw new Error('Sync Dummy');
     if (!req.session.user) {
         return next();
     }
@@ -105,9 +105,13 @@ app.use((error, req, res, next) => {
     });
 });
 
+//
+
 mongoose
-    .connect(MONGODB_URI)
-    .then((result) => {
+    .connect(MONGODB_URI, {
+        useNewUrlParser: true,
+    })
+    .then(() => {
         console.log('Ket noi voi MONGOOSE !!!');
         app.listen(3000);
     })
